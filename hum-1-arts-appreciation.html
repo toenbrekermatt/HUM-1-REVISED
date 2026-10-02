@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUM-1 Arts Appreciation • Home</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#111;--paper:#f4f3ea;--sage:#e9f1e2;--green:#5dff00;--navy:#1b2340;--red:#ff4b4b;--blue:#1cb0f6}
+body{background:var(--sage);color:var(--ink);font-family:"Courier New",Courier,monospace;min-height:100vh;overflow-x:hidden}
+.topnav{background:var(--navy);color:#fff;display:flex;align-items:center;gap:12px;padding:14px 18px;position:sticky;top:0;z-index:20}
+.topnav .back{background:none;border:none;color:#fff;font-size:22px;cursor:pointer;font-family:inherit;flex-shrink:0}
+.topnav .title{font-weight:900;letter-spacing:2px;font-size:clamp(12px,3.4vw,18px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-left:auto}
+.stats{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-weight:900;font-size:14px;padding:8px 18px;max-width:700px;margin:0 auto}
+#h-mode{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.frame{max-width:560px;margin:0 auto;padding:10px 14px 40px}
+.sheet{background:var(--paper);border:3px solid var(--ink);border-radius:22px;padding:22px 18px;box-shadow:0 6px 0 var(--ink)}
+.kicker{font-weight:900;letter-spacing:3px;font-size:15px}
+h1.big{font-size:52px;line-height:.95;font-weight:900;margin:10px 0 6px;letter-spacing:-1px}
+.sub{font-weight:700;font-size:19px;margin-bottom:18px}
+.menu-card{display:flex;gap:14px;align-items:flex-start;background:#fff;border:3px solid var(--ink);border-radius:18px;padding:18px 16px;margin:14px 0;box-shadow:0 5px 0 var(--ink);cursor:pointer;text-align:left;width:100%;font-family:inherit;transition:transform .08s}
+.menu-card:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
+.menu-card.green{background:var(--green)}
+.menu-card h2{font-size:26px;font-weight:900}
+.menu-card p{font-size:16px;font-weight:700;margin-top:4px}
+.icon{width:58px;height:58px;flex-shrink:0;border:3px solid var(--ink);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;background:#fff}
+.unit-box{background:#fff;border:3px solid var(--ink);border-radius:18px;padding:16px;margin-top:16px;box-shadow:0 5px 0 var(--ink)}
+.unit-box h3{font-size:16px;letter-spacing:2px;font-weight:900}
+.unit-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.unit-btn{border:3px solid var(--ink);border-radius:14px;padding:14px;font-weight:900;font-size:20px;cursor:pointer;background:#eef0e6;font-family:inherit;box-shadow:0 4px 0 var(--ink)}
+.unit-btn.active{background:var(--green)}
+.unit-btn:active{transform:translateY(3px);box-shadow:none}
+.hidden{display:none!important}
+/* runner */
+.runner{max-width:700px;margin:0 auto;padding:16px 14px 140px;font-family:'Nunito',"Courier New",monospace}
+.progress-wrap{height:16px;background:#d8d8d8;border:2px solid var(--ink);border-radius:99px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:var(--green);transition:width .3s}
+.card{background:#fff;border:3px solid var(--ink);border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 4px 0 var(--ink)}
+.card h3{font-size:18px;line-height:1.45;margin-bottom:6px}
+.card p,.card li{font-size:16px;line-height:1.6;font-weight:600;font-family:'Nunito',system-ui,sans-serif}
+.card ul{margin-left:18px;margin-top:8px}
+.card li{margin-bottom:6px}
+.badge{display:inline-block;font-size:12px;font-weight:900;letter-spacing:1px;background:#111;color:#fff;padding:6px 12px;border-radius:8px;margin-bottom:10px;max-width:100%;line-height:1.5}
+#r-title{font-size:clamp(20px,4vw,28px)!important;line-height:1.2;overflow-wrap:break-word}
+@media (max-width:520px){
+.stats{font-size:12px;gap:8px;padding:8px 12px}
+#h-mode{display:none}
+.runner{padding:12px 12px 140px}
+.card{padding:15px}
+}
+.opt{border:3px solid var(--ink);border-radius:14px;padding:12px 14px;font-weight:800;font-size:16px;cursor:pointer;background:#fff;margin-top:10px;display:flex;gap:10px;align-items:center;font-family:'Nunito',system-ui,sans-serif;box-shadow:0 3px 0 var(--ink)}
+.opt.selected{background:#ddf4ff} .opt.correct{background:#d7ffb8} .opt.wrong{background:#ffdfe0}
+.fill-input{width:100%;padding:14px;font-size:18px;font-weight:800;border:3px solid var(--ink);border-radius:12px;text-align:center;margin-top:12px;font-family:inherit}
+.bank-blank{min-height:58px;border:3px dashed var(--ink);border-radius:12px;padding:10px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;background:#fbfbf4}
+.bank-blank .ph{opacity:.45;font-weight:800}
+.bank-pool{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;justify-content:center}
+.wchip{border:3px solid var(--ink);border-radius:12px;background:#fff;padding:8px 12px;font-weight:900;cursor:pointer;box-shadow:0 3px 0 var(--ink);font-family:'Nunito',system-ui,sans-serif}
+.wchip:active{transform:translateY(2px);box-shadow:none}
+.wchip.used{opacity:.25;pointer-events:none}
+.wchip.pick{background:#ddf4ff}
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:3px solid var(--ink);padding:12px 14px;z-index:20}
+.bottom-inner{max-width:700px;margin:0 auto;display:flex;gap:10px}
+button.big{flex:1;border:3px solid var(--ink);border-radius:14px;padding:14px;font-size:16px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 4px 0 var(--ink)}
+.btn-check{background:var(--green)} .btn-check:disabled{background:#ddd;color:#888;box-shadow:none;cursor:not-allowed}
+.btn-skip{background:#fff}
+.feedback{position:fixed;bottom:0;left:0;right:0;z-index:30;padding:16px;display:none;border-top:3px solid var(--ink)}
+.feedback.show{display:block} .feedback.ok{background:#d7ffb8} .feedback.no{background:#ffdfe0}
+.feedback-inner{max-width:700px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.map-row{background:#fff;border:3px solid var(--ink);border-radius:14px;padding:12px;margin:10px 0;box-shadow:0 3px 0 var(--ink);cursor:pointer;font-weight:800}
+.src{font-size:12px;font-weight:700;opacity:.6;margin-top:8px}
+#h-mode{display:none}
+#r-badge{display:none}
+.run-top{display:flex;align-items:center;gap:10px;margin:6px 0 12px}
+.run-top .progress-wrap{flex:1}
+.pill{border:3px solid var(--ink);border-radius:99px;background:#fff;padding:6px 12px;font-weight:900;font-size:13px;box-shadow:0 3px 0 var(--ink);white-space:nowrap;font-family:"Courier New",Courier,monospace}
+.runner{font-family:"Courier New",Courier,monospace}
+.slide-kicker{font-weight:900;letter-spacing:3px;font-size:13px}
+.slide-title{font-size:clamp(22px,5vw,34px);line-height:1.05;font-weight:900;letter-spacing:-.5px;margin-top:6px;overflow-wrap:break-word}
+.slide-sub{font-weight:700;font-size:15px;margin-top:8px}
+.btn-skip:disabled{background:#ddd;color:#888;box-shadow:none;cursor:not-allowed;transform:none}
+</style>
+</head>
+<body>
+<div class="topnav"><button class="back" onclick="goHome()">&#8592;</button><div class="title">HUM-1 ARTS APPRECIATION</div></div>
+<div class="stats" id="statsrow"><span>🔥 <span id="h-streak">0</span></span><span>⚡ <span id="h-xp">0</span></span><span id="h-mode" style="margin-left:auto"></span></div>
+
+<!-- HOME -->
+<div id="home" class="frame"><div class="sheet">
+<div class="kicker">HUM-1 ARTS APPRECIATION / HOME</div>
+<h1 class="big">Create with purpose.</h1>
+<div class="sub">Choose where you want to begin.</div>
+<button class="menu-card green" onclick="startLessons()"><div class="icon">▶</div><div><h2>Start Lessons</h2><p>Study the selected unit's lessons.</p></div></button>
+<button class="menu-card" onclick="showQuizPicker()"><div class="icon">?</div><div><h2>Quiz</h2><p>Choose a unit quiz to take.</p></div></button>
+<button class="menu-card" onclick="showLongQuizPicker()"><div class="icon">?</div><div><h2>Long Quiz</h2><p>Choose a full quiz to take.</p></div></button>
+<button class="menu-card" onclick="startPretest()"><div class="icon">📝</div><div><h2>Pretests</h2><p>Choose a pretest to take.</p></div></button>
+<button class="menu-card" onclick="showMap()"><div class="icon">▦</div><div><h2>Course Map</h2><p>See the HUM1 sequence.</p></div></button>
+<div class="unit-box"><h3>CHOOSE A UNIT FOR LESSONS &amp; QUIZZES</h3><div class="unit-grid">
+<button class="unit-btn active" id="u1" onclick="setUnit('UNIT I')">UNIT I</button>
+<button class="unit-btn" id="u2" onclick="setUnit('UNIT II')">UNIT II</button>
+<button class="unit-btn" id="u3" onclick="setUnit('UNIT III')">UNIT III</button>
+</div><p class="src" id="unit-desc" style="margin-top:10px"></p></div>
+</div></div>
+
+<!-- LESSON / QUIZ RUNNER -->
+<div id="runner" class="runner hidden">
+<div class="run-top"><div class="progress-wrap"><div class="progress-fill" id="pfill"></div></div><div class="pill" id="r-clip">Clip 1 / 1</div><div class="pill">⭐ <span id="r-xp">0</span></div><div class="pill">🔥 <span id="r-streak">0</span></div></div>
+<div class="badge" id="r-badge">LESSON</div>
+<h1 class="big" id="r-title" style="font-size:30px"></h1>
+<div id="stage"></div>
+</div>
+<div class="bottom-bar hidden" id="bbar"><div class="bottom-inner">
+<button class="big btn-skip" id="btn-skip" onclick="nextStep(true)">SKIP</button>
+<button class="big btn-check" id="btn-next" onclick="nextStep()">CONTINUE</button>
+</div></div>
+<div class="feedback" id="feedback"><div class="feedback-inner">
+<div><h3 id="fb-title"></h3><p id="fb-msg"></p></div>
+<button class="big btn-check" id="fb-btn" style="max-width:180px" onclick="nextStep(true)">GOT IT</button>
+</div></div>
+
+<!-- MAP -->
+<div id="mapview" class="frame hidden"><div class="sheet">
+<div class="kicker">HUM 1 / COURSE MAP</div>
+<h1 class="big" style="font-size:38px">HUM1 sequence.</h1>
+<div class="sub">Tap a lesson to study its slides only.</div>
+<div id="maplist"></div>
+<button class="menu-card" onclick="goHome()"><div class="icon">←</div><div><h2>Back Home</h2><p>Choose lessons, quiz, or long quiz.</p></div></button>
+</div></div>
+
+<!-- PRETEST PICKER -->
+<div id="pretestview" class="frame hidden"><div class="sheet">
+<div class="kicker">HUM-1 / PRETESTS</div>
+<h1 class="big" style="font-size:38px">Choose a pretest.</h1>
+<div class="sub">Tap the pretest you prefer.</div>
+<div id="pretestlist"></div>
+<button class="menu-card" onclick="goHome()"><div class="icon">←</div><div><h2>Back Home</h2><p>Choose lessons, quiz, or long quiz.</p></div></button>
+</div></div>
+
+<!-- QUIZ PICKER -->
+<div id="quizview" class="frame hidden"><div class="sheet">
+<div class="kicker">HUM-1 / QUIZZES</div>
+<h1 class="big" style="font-size:38px">Choose a quiz.</h1>
+<div class="sub">Tap the quiz you prefer.</div>
+<div id="quizlist"></div>
+<button class="menu-card" onclick="goHome()"><div class="icon">←</div><div><h2>Back Home</h2><p>Choose lessons, quiz, or long quiz.</p></div></button>
+</div></div>
+
+<!-- LONG QUIZ PICKER -->
+<div id="longquizview" class="frame hidden"><div class="sheet">
+<div class="kicker">HUM-1 / LONG QUIZZES</div>
+<h1 class="big" style="font-size:38px">Choose a long quiz.</h1>
+<div class="sub">Tap the long quiz you prefer.</div>
+<div id="longquizlist"></div>
+<button class="menu-card" onclick="goHome()"><div class="icon">←</div><div><h2>Back Home</h2><p>Choose lessons, quiz, or long quiz.</p></div></button>
+</div></div>
+
+<!-- DONE -->
+<div id="done" class="frame hidden"><div class="sheet" style="text-align:center">
+<div style="font-size:70px">🎉</div>
+<h1 class="big" style="font-size:36px" id="done-title">Complete!</h1>
+<p class="sub" id="done-sub"></p>
+<div class="card"><div id="done-xp" style="font-size:40px;font-weight:900"></div><p id="done-acc"></p></div>
+<div id="done-mistakes" style="text-align:left"></div>
+<button class="menu-card green" onclick="goHome()"><div class="icon">▶</div><div><h2>Back Home</h2><p>Pick the next unit or quiz.</p></div></button>
+</div></div>
+
+<script>
+
+const DATA = [
+{
+id:'L1', short:'Unit 1', title:'Humanities and the Arts',
+desc:'Intro, creativity & imagination, assumptions, systems of appreciation, forms.',
+color:'#58cc02', emoji:'🎨',
+takeaways:['Unit 1: Humanities and the Arts','Creativity + Imagination definitions','Art is Universal / Expresses Human Experiences / Intentional / Symbolic / Reflects and Shapes Society','Sensory / Emotional / Intellectual / Cultural Appreciation','Why humans created art + Painting / Music / Literature / Photography'],
+slides:[
+{t:'UNIT 1: HUMANITIES AND THE ARTS — Introduction', b:`Art is one of humanity's oldest and most universal expressions. It arises from the human capacity for creativity and imagination, allowing individuals to transform ideas, feelings, and experiences into tangible or intangible forms.<br><br><ul><li><b>Creativity</b> - the ability to generate original ideas and bring something new into existence. It involves innovation, exploration, and pushing beyond the ordinary.</li><li><b>Imagination</b> - the power of the mind to form images, concepts, and sensations without immediate input of the senses. Imagination makes art limitless, turning what "is" into what "could be."</li></ul>`},
+{t:'Why Are Creativity and Imagination Important in the Arts?', b:`<ul><li>They expand human experience — allowing us to see the world differently.</li><li>They challenge limits — moving art beyond tradition into innovation.</li><li>They connect cultures and generations — what an artist imagines today might inspire someone hundreds of years later.</li><li>They shape identities — individuals and nations express who they are through imaginative and creative works.</li></ul>`},
+{t:'Assumptions of Arts', b:`Basic beliefs, underlying truths, and universal principles that guide our understanding and appreciation of art.`},
+{t:'Art is Universal', b:`Art exists in every culture, society, and historical era.<br>From prehistoric cave paintings to modern digital art, human beings have always used creativity to communicate, decorate, ritualize, and record experiences.<br>Even in societies with little technology, artistic expression (through dance, body art, chants, or crafts) is always present.`},
+{t:'Art Expresses Human Experiences', b:`Art is often referred to as a “mirror of life.”<br>It embodies personal emotions (love, fear, joy, grief), collective experiences (war, migration, celebrations), and cultural values (beliefs, myths, traditions).<br>This assumption highlights that behind every artwork is a story — about the artist, the society, or the historical period.`},
+{t:'Art is Intentional', b:`While creativity may seem spontaneous, art is created with intention — whether to beautify, persuade, provoke thought, or simply express.<br>This assumption helps students understand that art is not random — it carries meaning, vision, and design.`},
+{t:'Art is Symbolic', b:`Symbolism makes art powerful because it allows multiple interpretations depending on the viewer’s perspective.<br>Art often goes beyond the literal; it uses symbols, metaphors, and signs to communicate ideas.`},
+{t:'Art Reflects and Shapes Society', b:`It is influenced by social context and, in turn, influences people’s values.`},
+{t:'System of Appreciation', b:`Different ways human beings perceive, evaluate, and respond to artworks.`},
+{t:'Sensory Appreciation', b:`<ul><li>We respond through our senses: sight, hearing, touch, even smell and taste (in culinary arts).</li><li>It involves recognizing beauty, harmony, proportion, and appeal without necessarily analyzing deeper meanings.</li></ul>`},
+{t:'Emotional Appreciation', b:`<ul><li>Art has the power to move emotions — happiness, sadness, nostalgia, fear, awe, peace.</li><li>Emotional appreciation focuses on how an artwork touches the heart or resonates with the viewer's experiences.</li></ul>`},
+{t:'Intellectual Appreciation', b:`<ul><li>Intellectual appreciation requires understanding symbolism, context, and philosophy.</li><li>Art is appreciated because it stimulates thought and reflection.</li></ul>`},
+{t:'Cultural Appreciation', b:`<ul><li>Cultural appreciation also includes respect for diversity in art: what may seem "strange" to one culture is deeply meaningful to another.</li><li>This system of appreciation involves recognizing artworks as part of traditions, heritage, and identity.</li></ul>`},
+{t:'Forms of Art', b:`Art is human creativity expressed in different forms.`},
+{t:'Why did humans create Art?', b:`<ul><li>Entertainment?</li><li>Religion?</li><li>Love?</li><li>Money?</li><li>Communication?</li><li>History?</li><li>Identity?</li></ul>`},
+{t:'To Communicate', b:`Why did humans create Art? People already communicated through cave paintings.`},
+{t:'Different Forms of Art Based on Other People', b:`PAINTING<br>MUSIC<br>LITERATURE<br>PHOTOGRAPHY`},
+],
+questions:[
+{q:'Art arises from the human capacity for what two things, allowing individuals to transform ideas, feelings, and experiences into tangible or intangible forms?', opts:['Money and fame','Creativity and imagination','Copying and memorizing','Competing and winning'], a:1, why:'Intro: oldest and most universal expressions from creativity + imagination.'},
+{q:'Creativity is:', opts:['The power to form images without senses','The ability to generate original ideas and bring something new into existence — innovation, exploration, pushing beyond ordinary','Only copying tradition','Avoiding new ideas'], a:1, why:'Full definition from Unit 1.'},
+{q:'Imagination is:', opts:['The ability to generate original ideas','The power of the mind to form images, concepts, and sensations without immediate input of the senses — turning what "is" into what "could be"','Only dreaming while asleep','Memorizing dates'], a:1, why:'Full definition from Unit 1.'},
+{q:'Which importance says: what an artist imagines today might inspire someone hundreds of years later?', opts:['They expand human experience','They challenge limits','They connect cultures and generations','They shape identities'], a:2, why:'Connect cultures and generations.'},
+{q:'Assumptions of Arts are:', opts:['Basic beliefs, underlying truths, and universal principles that guide understanding and appreciation of art','Random guesses','Only exam tips','Laws about paint prices'], a:0, why:'Definition slide.'},
+{q:'From prehistoric cave paintings to modern digital art, and dance, body art, chants, or crafts even with little technology — this is:', opts:['Art is Universal','Art is Intentional','Art is Symbolic','Art is Intentional only'], a:0, why:'Art exists in every culture, society, historical era.'},
+{q:'“Mirror of life” embodying love, fear, joy, grief, war, migration, celebrations, beliefs, myths, traditions — behind every artwork is a story. This is:', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','System of Appreciation'], a:1, why:'Mirror of life = expresses human experiences.'},
+{q:'Art is not random — it carries meaning, vision, and design, whether to beautify, persuade, provoke thought, or simply express. This is:', opts:['Art is Intentional','Art is Symbolic','Art is Universal','Cultural Appreciation'], a:0, why:'Created with intention.'},
+{q:'Uses symbols, metaphors, and signs to communicate ideas, allowing multiple interpretations depending on viewer perspective. This is:', opts:['Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation'], a:0, why:'Beyond the literal.'},
+{q:'It is influenced by social context and, in turn, influences people’s values. This is:', opts:['Art reflects and shapes Society','Art is Intentional','Sensory Appreciation','Forms of Art'], a:0, why:'Reflects and shapes society.'},
+{qtype:'tf', q:'TRUE or FALSE: Sensory Appreciation involves recognizing beauty, harmony, proportion, and appeal without necessarily analyzing deeper meanings, through sight, hearing, touch, even smell and taste.', a:true, why:'Exact sensory definition.'},
+{q:'Focuses on how artwork touches the heart or resonates with viewer experiences — happiness, sadness, nostalgia, fear, awe, peace. This is:', opts:['Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation'], a:1, why:'Moves emotions.'},
+{q:'Requires understanding symbolism, context, and philosophy; stimulates thought and reflection. This is:', opts:['Sensory','Emotional','Intellectual Appreciation','Cultural'], a:2, why:'Intellectual definition.'},
+{q:'What may seem "strange" to one culture is deeply meaningful to another; recognizing artworks as part of traditions, heritage, and identity. This is:', opts:['Sensory','Emotional','Intellectual','Cultural Appreciation'], a:3, why:'Respect for diversity + heritage.'},
+{q:'Why did humans create Art? Which list is complete from the file?', opts:['Entertainment, Religion, Love, Money, Communication, History, Identity','Only money','Only school','Only religion'], a:0, why:'All 7 listed.'},
+{q:'People already communicated through what?', opts:['Text messages','Cave paintings','Emails','Newspapers'], a:1, why:'To Communicate slide.'},
+{q:'Different Forms of Art Based on Other People listed are:', opts:['PAINTING, MUSIC, LITERATURE, PHOTOGRAPHY','Only dance','Only film','Only sculpture'], a:0, why:'Four listed.'},
+]
+},
+{
+id:'L2', short:'Subject', title:'The Subject of Art',
+desc:'What artwork is about; representational vs non-representational.',
+color:'#1cb0f6', emoji:'🖼️',
+takeaways:['Subject = main object or theme; answers What is artwork about?; person, object, idea, or event','Two types: Representational (Objective) vs Non-Representational (Non-Objective)','Representational: Portraits, Landscapes, Still Life','Non-Representational: colors, lines, shapes, textures to express emotion or concept','Notice first: subject or feeling?'],
+slides:[
+{t:'THE SUBJECT OF ART', b:`<ul><li>The subject of art is the main object or theme that the artist portrays.</li><li>It answers the question: "What is the artwork about?"</li><li>The subject can be: person, object, idea, or event the artist wants to communicate.</li></ul>`},
+{t:'TWO TYPES OF SUBJECTS IN ARTS', b:`Representational<br>Non-Representational<br>Objective Art<br>Non-Objective Art`},
+{t:'REPRESENTATIONAL (OBJECTIVE ART)', b:`Depicts something that is easily recognizable<br><br>PORTRAITS<br>LANDSCAPES<br>STILL LIFE`},
+{t:'NON-REPRESENTATIONAL (NON-OBJECTIVE ART)', b:`Does not depict recognizable objects (colors, lines, shapes, textures - to express emotion or concept)`},
+{t:'Reflection Question', b:`WHEN YOU LOOK AT A PAINTING OR PHOTO, WHAT DO YOU NOTICE FIRST? THE SUBJECT OR THE FEELING IT GIVES YOU?`},
+],
+questions:[
+{q:'The subject of art is:', opts:['The main object or theme that the artist portrays','The price of the frame','The museum location','The paint brand'], a:0, why:'First line of Subject of Art.'},
+{q:'It answers the question:', opts:['“Who paid for it?”','“What is the artwork about?”','“How old is the artist?”','“Where is the museum?”'], a:1, why:'Exact question.'},
+{q:'The subject can be:', opts:['person, object, idea, or event the artist wants to communicate','only trees','only paint','only frames'], a:0, why:'Full list.'},
+{q:'Two types of subjects in arts are:', opts:['Representational and Non-Representational (Objective Art and Non-Objective Art)','Tall and Short','Old and New','Loud and Quiet'], a:0, why:'Two types slide.'},
+{q:'Depicts something that is easily recognizable — with PORTRAITS, LANDSCAPES, STILL LIFE. This is:', opts:['Representational (Objective Art)','Non-Representational (Non-Objective Art)','Content of Art','Function of Art'], a:0, why:'Representational definition.'},
+{q:'Does not depict recognizable objects (colors, lines, shapes, textures - to express emotion or concept). This is:', opts:['Representational','Non-Representational (Non-Objective Art)','Personal Function','Educational Function'], a:1, why:'Non-representational definition.'},
+{qtype:'fill', q:'Representational art is also called _____ Art. (one word)', a:'objective', why:'Representational (Objective Art).'},
+{qtype:'fill', q:'Non-representational art is also called non-_____ Art. (one word)', a:'objective', why:'Non-Representational (Non-Objective Art).'},
+{q:'When you look at a painting or photo, what do you notice first?', opts:['The subject or the feeling it gives you','Only the signature','Only the price tag','Only the wall color'], a:0, why:'Reflection question slide.'},
+]
+},
+{
+id:'L3', short:'Content + Function', title:'Content & Function of Art',
+desc:'Message/meaning + 7 functions: personal to cultural (full text).',
+color:'#a560ff', emoji:'💡',
+takeaways:['Content = message, idea, emotion, meaning; answers What is artist trying to say?','Same subject can differ: Love and Tenderness vs Poverty and Struggle','3 levels: Subject Matter, Form, Iconography/Meaning','Functions: roles/purposes — entertain, teach, express, inspire, protest','7 functions: Personal, Social, Physical, Spiritual, Educational, Political, Cultural'],
+slides:[
+{t:'THE CONTENT OF ART', b:`<ul><li>The Content of Art refers to the message, idea, emotion, or meaning behind the artwork.</li><li>It answers the question: "What is the artist trying to say?"</li></ul>`},
+{t:'Same Subject, Different Content', b:`Even if two artworks have the same subject, their content can be completely different.<br><br>DIFFERENCES<br>LOVE AND TENDERNESS<br>POVERTY AND STRUGGLE`},
+{t:'THREE LEVELS OF CONTENT', b:`<ul><li>Subject Matter - the literal object (what you see)</li><li>Form - how the artist arranges &amp; uses elements of art (composition, color, line)</li><li>Iconography / Meaning - the symbolic or emotional meaning behind the work</li></ul>`},
+{t:'THE FUNCTION OF ART', b:`<ul><li>The functions of Art refers to the roles or purposes that art serves in human life &amp; society.</li><li>Art can entertain, teach, express, inspire, or even protest.</li></ul>`},
+{t:'I. PERSONAL FUNCTION OF ART', b:`<ul><li>Art serves as a form of self-expression or emotional release.</li><li>Artists use art to communicate their feelings, thoughts, or personal experiences.</li><li>Viewers also use art to reflect on their own emotions.</li></ul>EXAMPLES:<br><ul><li>Writing a poem about heartbreak</li><li>Painting to relieve stress or sadness</li><li>Listening to music to connect with one's emotions</li></ul>`},
+{t:'II. SOCIAL FUNCTION OF ART', b:`<ul><li>Art serves as a bridge between people, communicating shared values, traditions.</li><li>It reflects &amp; influences society and culture.</li><li>Used to inform, inspire, unite, or protest social injustices.</li></ul>EXAMPLES:<br><ul><li>Murals that promote peace &amp; equality</li><li>Festivals &amp; dances that preserve culture</li><li>Protest art against corruption or climate change</li></ul>`},
+{t:'III. PHYSICAL (PRACTICAL) FUNCTION OF ART', b:`<ul><li>Art used in everyday life - functional, decorative, and aesthetic</li><li>Architecture, clothing design, furniture, &amp; product design</li><li>Combines usefulness &amp; beauty</li></ul>`},
+{t:'IV. SPIRITUAL (RELIGIOUS) FUNCTION OF ART', b:`<ul><li>Art that connects humans with faith, belief, or spirituality</li><li>Used in rituals, worship, &amp; religious storytelling</li></ul>`},
+{t:'V. EDUCATIONAL FUNCTION OF ART', b:`<ul><li>Art serves as a tool for learning</li><li>It informs, inspires curiosity, and communicates ideas visually</li></ul>`},
+{t:'VI. POLITICAL FUNCTION OF ART', b:`<ul><li>Art used to promote ideology, criticize leaders, or influence political thought</li><li>It may serve propaganda or activism</li></ul>`},
+{t:'VII. CULTURAL FUNCTION OF ART', b:`<ul><li>Preserve &amp; celebrates a community's heritage, beliefs, &amp; identity</li><li>Strengthens national pride &amp; cultural continuity</li></ul>`},
+],
+questions:[
+{q:'The Content of Art refers to:', opts:['The message, idea, emotion, or meaning behind the artwork','Only the frame size','Only the paint price','Only the museum name'], a:0, why:'Exact content definition.'},
+{q:'It answers the question:', opts:['“What is the artist trying to say?”','“What is the artwork about?” (that is Subject)','“How much is it?”','“Who cleaned it?”'], a:0, why:'Content = trying to say; Subject = about.'},
+{q:'Even if two artworks have the same subject, their content can be completely different. Example pair given:', opts:['LOVE AND TENDERNESS vs POVERTY AND STRUGGLE','Red vs Blue only','Big vs Small only','Old vs New only'], a:0, why:'Differences slide.'},
+{q:'Subject Matter - the literal object (what you see) belongs to:', opts:['Three Levels of Content','Two Types of Subjects','Seven Functions','Elements of Art'], a:0, why:'Level 1.'},
+{q:'How the artist arranges & uses elements of art (composition, color, line) — this level is:', opts:['Subject Matter','Form','Iconography / Meaning','Balance'], a:1, why:'Level 2 = Form.'},
+{q:'The symbolic or emotional meaning behind the work — this level is:', opts:['Subject Matter','Form','Iconography / Meaning','Texture'], a:2, why:'Level 3.'},
+{q:'The functions of Art refers to:', opts:['The roles or purposes that art serves in human life & society','Only decoration','Only exams','Only frames'], a:0, why:'Function definition.'},
+{q:'Art can:', opts:['entertain, teach, express, inspire, or even protest','only hang on walls','only make money','only use red paint'], a:0, why:'Five verbs listed.'},
+{q:'Writing a poem about heartbreak; Painting to relieve stress or sadness; Listening to music to connect with one\'s emotions. These are examples of:', opts:['I. Personal Function — self-expression or emotional release','II. Social Function','III. Physical Function','VI. Political Function'], a:0, why:'Personal + all 3 examples.'},
+{q:'Bridge between people, shared values, traditions; reflects & influences society; inform, inspire, unite, or protest injustices. Murals for peace, festivals/dances, protest art. This is:', opts:['Personal','Social Function of Art','Physical','Spiritual'], a:1, why:'Full social definition + examples.'},
+{q:'Architecture, clothing design, furniture, & product design; everyday life; functional, decorative, aesthetic; combines usefulness & beauty. This is:', opts:['III. Physical (Practical) Function','IV. Spiritual','V. Educational','VII. Cultural'], a:0, why:'Physical full text.'},
+{q:'Connects humans with faith, belief, or spirituality; used in rituals, worship, & religious storytelling. This is:', opts:['Personal','Social','IV. Spiritual (Religious) Function','Political'], a:2, why:'Spiritual full text.'},
+{q:'Serves as a tool for learning; informs, inspires curiosity, communicates ideas visually. This is:', opts:['V. Educational Function','VI. Political','VII. Cultural','I. Personal'], a:0, why:'Educational full text.'},
+{q:'Used to promote ideology, criticize leaders, or influence political thought; may serve propaganda or activism. This is:', opts:['Educational','Political Function of Art','Cultural','Physical'], a:1, why:'Political full text.'},
+{q:'Preserve & celebrates heritage, beliefs, & identity; strengthens national pride & cultural continuity. This is:', opts:['Personal','Social','Political','VII. Cultural Function'], a:3, why:'Cultural full text.'},
+]
+},
+{
+id:'L4', short:'Views + Artist', title:'Perspectives, Artist vs Artisan, Forms',
+desc:'Philosophy vs assumptions; artist vs artisan; 4 forms of art.',
+color:'#ff9600', emoji:'⚖️',
+takeaways:['Philosophical Perspective: theory-based, why & how, critical analysis','Assumptions: belief-based, what and truths, foundational appreciation','Artist: self-expression, emotion, concept — Luna, Amorsolo, Cayabyab','Artisan: skilled craftsperson, beauty & utility — weavers, potters, carvers','Forms: Visual, Literary, Performing, Applied'],
+slides:[
+{t:'Differences of Philosophical Perspective vs. Assumption of Arts', b:`PHILOSOPHICAL PERSPECTIVE<br><ul><li>Theory-based understanding</li><li>Explains the "why" &amp; "how" of Art</li><li>Used for critical analysis</li></ul>VS.<br><br>ASSUMPTIONS OF ARTS<br><ul><li>Belief-based understanding</li><li>States the "what" and "truths" we hold about art</li><li>Used as foundational ideas in appreciation</li></ul>`},
+{t:'ARTIST VS. ARTISANS', b:`ARTIST vs ARTISANS`},
+{t:'ARTIST', b:`An artist is a person who creates art primarily for self-expression, emotion, or concept.<br><br>Their work often aims to evoke thought, feeling, or meaning beyond practical use.<br><br>EXAMPLES:<br><ul><li>Painters like Juan Luna or Fernando Amorsolo</li><li>Musicians like Ryan Cayabyab</li><li>Filmmakers, poets, sculptors, dancers</li></ul>`},
+{t:'ARTISANS', b:`An artisan is a skilled craftsperson who creates functional yet artistic objects.<br><br>Their works often combine beauty &amp; utility, preserving traditional techniques &amp; local craftsmanship.<br><br><ul><li>Weavers from Mindanao</li><li>Potters from Vigan</li><li>Wood carvers from Laguna</li><li>Jewelry makers, furniture, builders, blacksmiths</li></ul>`},
+{t:'FORMS OF ART — 1. VISUAL ARTS', b:`VISUAL ARTS<br><br>Painting, Sculpture, Architecture, Photography, Film<br><br>1<br><br>PRODUCTION<br>SHOT<br>DIRECTOR<br>DATE`},
+{t:'FORMS OF ART — 2. LITERARY ARTS', b:`LITERARY ARTS<br><br>Poetry | Prose | Drama<br><br>2<br><br>Books`},
+{t:'FORMS OF ART — 3. PERFORMING ARTS', b:`PERFORMING ARTS<br><br>Dance | Music | Theater<br><br>3`},
+{t:'FORMS OF ART — 4. APPLIED ARTS', b:`APPLIED ARTS<br><br>Design | Crafts | Industrial arts | Fashion<br><br>4`},
+],
+questions:[
+{q:'Theory-based, explains why & how, used for critical analysis. This is:', opts:['Philosophical Perspective','Assumptions of Arts','Personal Function','Texture'], a:0, why:'Left side full text.'},
+{q:'Belief-based, states what and truths, used as foundational ideas in appreciation. This is:', opts:['Philosophical Perspective','Assumptions of Arts','Balance','Proportion'], a:1, why:'Right side full text.'},
+{q:'Creates primarily for self-expression, emotion, or concept; aims to evoke thought, feeling, or meaning beyond practical use. This is:', opts:['Artist','Artisan','Curator','Director'], a:0, why:'Artist definition.'},
+{q:'Which examples are Artists per file?', opts:['Painters like Juan Luna or Fernando Amorsolo; Musicians like Ryan Cayabyab; Filmmakers, poets, sculptors, dancers','Weavers from Mindanao only','Potters from Vigan only','Builders only'], a:0, why:'All artist examples.'},
+{q:'Skilled craftsperson creating functional yet artistic objects; combines beauty & utility, preserving traditional techniques & local craftsmanship. This is:', opts:['Artist','Artisan','Audience','Critic'], a:1, why:'Artisan definition.'},
+{q:'Which examples are Artisans per file?', opts:['Weavers from Mindanao; Potters from Vigan; Wood carvers from Laguna; Jewelry makers, furniture, builders, blacksmiths','Juan Luna and Amorsolo only','Ryan Cayabyab only','Filmmakers only'], a:0, why:'All artisan examples.'},
+{q:'Painting, Sculpture, Architecture, Photography, Film belong to:', opts:['1. Visual Arts','2. Literary Arts','3. Performing Arts','4. Applied Arts'], a:0, why:'Visual list + number 1.'},
+{q:'Poetry | Prose | Drama / Books belong to:', opts:['Visual Arts','Literary Arts (2)','Performing Arts','Applied Arts'], a:1, why:'Literary list + number 2.'},
+{q:'Dance | Music | Theater belong to:', opts:['Visual','Literary','Performing Arts (3)','Applied'], a:2, why:'Performing list + number 3.'},
+{q:'Design | Crafts | Industrial arts | Fashion belong to:', opts:['Visual','Literary','Performing','Applied Arts (4)'], a:3, why:'Applied list + number 4.'},
+{qtype:'fill', q:'Visual arts slate includes PRODUCTION, SHOT, DIRECTOR, and _____. (one word)', a:'date', why:'Four words on visual slate: Production Shot Director Date.'},
+]
+},
+{
+id:'L5', short:'Elements+Design', title:'Elements, Principles, Production & Curation',
+desc:'Line to Space, Balance to Proportion, production & curation (full text).',
+color:'#ff5c8a', emoji:'🧩',
+takeaways:['Elements: Line, Shape, Form, Color, Texture, Space','Line types; Geometric vs Organic shapes; Form 3D; HUE + Intensity; Texture; Space','Principles: Balance, Contrast, Emphasis, Movement, Pattern, Unity, Variety, Proportion','Production: turning idea into artwork; Curation: selecting, organizing, interpreting, preserving, presenting','Curator: oversee collection, research, organize exhibitions, select artworks'],
+slides:[
+{t:'III. Elements of ART & PRINCIPLES OF DESIGN', b:`The Elements of Art are the fundamental visual components artists use to create an artwork.<br><br>Line<br><br>Shape<br><br>Form<br><br>Color<br><br>Texture<br><br>Space`},
+{t:'LINE — The Beginning of Every Artwork', b:`A line is a continuous mark made by a moving point.<br><br>It is one of the most basic elements of art because almost every artwork begins with a single line.<br><br><ul><li>Straight</li><li>Curved</li><li>Thick</li><li>Thin</li><li>Broken</li><li>Horizontal</li><li>Vertical</li><li>Diagonal</li></ul>`},
+{t:'SHAPE — The Identity of Objects', b:`A shape is a two-dimensional area created by lines.<br><br>Geometric Shapes: Circle, Square, Triangle, Rectangle<br>Organic Shapes: Leaves, Clouds, Human Figures, Flowers`},
+{t:'FORM — When Shape Gets Depth', b:`Shape is two-dimensional. Form is three-dimensional.<br><br>Circle → Sphere<br>Triangle + Square → Cube / Pyramid<br><br>"When Shape Gets Depth"<br>Circle | Sphere<br>Triangle | Square<br>Cube | Pyramid`},
+{t:'COLOR — The Element That Can Change The Mood Of An Artwork', b:`Color is one of the most noticeable elements of art.<br><br>It can attract attention, create mood, establish symbolism, and help organize an artwork.<br><br>HUE — Color Family — the basic colors:<br>RED - PURPLE [TERTIARY]<br>RED (PRIMARY)<br>RED - ORANGE [TERTIARY]<br>PURPLE (SECONDARY)<br>ORANGE (SECONDARY)<br>BLUE - PURPLE (TERTIARY)<br>YELLOW - ORANGE (TERTIARY)<br>the basic colors<br><br>BLUE (PRIMARY)<br>YELLOW (PRIMARY)<br>BLUE - GREEN (TERTIARY)<br>GREEN (SECONDARY)<br>YELLOW - GREEN [TERTIARY]`},
+{t:'INTENSITY', b:`INTENSITY — How bright, vivid, dull, or muted<br><br>Reds<br>Oranges<br>Pinks<br>Yellows<br>Mauve Pinks<br>Greens<br>Yellow<br>Mauves<br>Greens<br>Violets<br>Blue<br>Greens<br>Blue Violets<br>Blues`},
+{t:'TEXTURE — How Something Looks or Feels', b:`Texture refers to the surface quality of an object.<br><br>Sandpaper<br>Fur<br>Glass<br>Metal<br>Tree Bark<br>Silk`},
+{t:'SPACE — The Element People Often Forget', b:`Space refers to the area around, between, above, below, or within objects.`},
+{t:'IV. Principles of Design — 1. Balance', b:`Distribution of visual weight in an artwork so that the composition feels stable and organized<br><br>BALANCE<br>THE PRINCIPLES OF GRAPHIC DESIGN<br>GOOD<br>BAD<br>Balance<br>Balancing act<br>Balancing Act.<br>Good example`},
+{t:'2. Contrast', b:`An artwork can become visually flat or difficult to understand because everything may appear equally important.<br><br>Contrast<br>Contrast in shape<br>Contrast in color<br>Contrast in scale<br>Contrast in layout`},
+{t:'3. Emphasis', b:`Emphasis is the principle of making a particular part of an artwork more noticeable or important than the other parts.<br><br>Emphasis<br>Emphasis<br>Design Principles<br>Emphasis is a critical principle`},
+{t:'4. Movement', b:`Movement is the principle that creates a sense of motion or guides the viewer's eyes through an artwork.<br><br>\u3044\u304d\u307e\u305b\u3066\u3059 VISUAL MOVEMENT`},
+{t:'5. Pattern', b:`Pattern is the repetition of visual elements in a predictable or recognizable arrangement.<br><br>Pattern<br>Design Principles<br>Pattern creates visual interest`},
+{t:'6. Unity', b:`Unity is the sense that all parts of an artwork belong together and contribute to one overall composition or idea.`},
+{t:'Variety', b:`Variety is the use of difference and variation within an artwork to create interest and prevent monotony.`},
+{t:'Proportion', b:`Proportion refers to the relationship between the size, scale, and dimensions of different parts of an artwork.<br><br>Bad Proportion<br>Good Proportion`},
+{t:'V. ART PRODUCTION & ART CURATION — Production', b:`What is Art Production?<br>Art production is the process of turning an idea, concept, or inspiration into an actual artwork.<br><br>Sources / inspirations listed:<br><ul><li>Personal experiences</li><li>Emotions</li><li>Nature</li><li>Culture</li><li>History</li><li>Society</li><li>Politics</li><li>Relationships</li><li>Dreams</li><li>Imagination</li></ul>`},
+{t:'Art Curation', b:`What is Art Curation?<br>Art curation is the process of selecting, organizing, interpreting, preserving, and presenting artworks for an audience.<br><br>A Day in the Life of a Art Curator:<br>Oversee Museum's Collection<br>Research Artists<br>Organize Exhibitions<br>Select Artworks`},
+],
+questions:[
+{q:'The Elements of Art are:', opts:['The fundamental visual components artists use to create an artwork: Line, Shape, Form, Color, Texture, Space','Only paint and brush','Only frames','Only museums'], a:0, why:'Intro + full 6 list.'},
+{q:'A continuous mark made by a moving point; almost every artwork begins with a single line. This is:', opts:['Line — The Beginning of Every Artwork','Shape','Form','Color'], a:0, why:'Line definition.'},
+{q:'Which are line types listed?', opts:['Straight, Curved, Thick, Thin, Broken, Horizontal, Vertical, Diagonal','Only red and blue','Only big and small','Only happy and sad'], a:0, why:'All 8 preserved.'},
+{q:'A two-dimensional area created by lines. Geometric: Circle, Square, Triangle, Rectangle. Organic: Leaves, Clouds, Human Figures, Flowers. This is:', opts:['Line','Shape — The Identity of Objects','Form','Texture'], a:1, why:'Shape full text.'},
+{q:'Shape is two-dimensional. Form is three-dimensional. Circle→Sphere, Triangle/Square→Cube/Pyramid. This is:', opts:['Shape','Form — When Shape Gets Depth','Color','Space'], a:1, why:'Form full text.'},
+{q:'Can attract attention, create mood, establish symbolism, and help organize an artwork; most noticeable. This is:', opts:['Line','Shape','Color — Can Change The Mood','Space'], a:2, why:'Color definition.'},
+{q:'HUE means:', opts:['Color Family — the basic colors','Only black','Only white','Only frames'], a:0, why:'HUE slide.'},
+{q:'Which are PRIMARY colors per hue list?', opts:['RED, BLUE, YELLOW','PURPLE, ORANGE, GREEN','RED-PURPLE, BLUE-GREEN','All tertiaries'], a:0, why:'RED (PRIMARY), BLUE (PRIMARY), YELLOW (PRIMARY).'},
+{q:'Which are SECONDARY per list?', opts:['PURPLE, ORANGE, GREEN','RED, BLUE, YELLOW','RED-ORANGE, YELLOW-GREEN','Straight, Curved'], a:0, why:'PURPLE, ORANGE, GREEN (SECONDARY).'},
+{q:'INTENSITY means:', opts:['How bright, vivid, dull, or muted','How loud music is','How big museum is','How old paint is'], a:0, why:'Intensity definition.'},
+{q:'Surface quality of an object — Sandpaper, Fur, Glass, Metal, Tree Bark, Silk. This is:', opts:['Texture — How Something Looks or Feels','Line','Space','Balance'], a:0, why:'Texture full text.'},
+{q:'Area around, between, above, below, or within objects. Often forgotten. This is:', opts:['Line','Shape','Space','Contrast'], a:2, why:'Space definition.'},
+{q:'Distribution of visual weight so composition feels stable and organized. GOOD vs BAD. This is:', opts:['Balance','Contrast','Emphasis','Movement'], a:0, why:'Balance definition.'},
+{q:'Can become visually flat or difficult to understand because everything may appear equally important. Shape, color, scale, layout. This is:', opts:['Balance','Contrast','Unity','Proportion'], a:1, why:'Contrast full text.'},
+{q:'Making a particular part more noticeable or important than other parts. This is:', opts:['Emphasis','Pattern','Unity','Variety'], a:0, why:'Emphasis definition.'},
+{q:'Creates sense of motion or guides viewer eyes through artwork. This is:', opts:['Movement','Pattern','Unity','Balance'], a:0, why:'Movement definition.'},
+{q:'Repetition of visual elements in predictable or recognizable arrangement; creates visual interest. This is:', opts:['Pattern','Unity','Variety','Proportion'], a:0, why:'Pattern full text.'},
+{q:'Sense that all parts belong together and contribute to one overall composition or idea. This is:', opts:['Unity','Variety','Contrast','Emphasis'], a:0, why:'Unity definition.'},
+{q:'Use of difference and variation to create interest and prevent monotony. This is:', opts:['Unity','Variety','Proportion','Balance'], a:1, why:'Variety definition.'},
+{q:'Relationship between size, scale, dimensions of different parts. Bad vs Good. This is:', opts:['Proportion','Pattern','Movement','Texture'], a:0, why:'Proportion definition.'},
+{q:'Process of turning an idea, concept, or inspiration into an actual artwork. This is:', opts:['Art Production','Art Curation','Balance','Contrast'], a:0, why:'Production definition.'},
+{q:'Which are listed inspirations for production?', opts:['Personal experiences, Emotions, Nature, Culture, History, Society, Politics, Relationships, Dreams, Imagination','Only money','Only frames','Only exams'], a:0, why:'All 10 preserved.'},
+{q:'Process of selecting, organizing, interpreting, preserving, and presenting artworks for an audience. This is:', opts:['Art Production','Art Curation','Line','Shape'], a:1, why:'Curation definition.'},
+{q:'A Day in the Life of an Art Curator includes:', opts:['Oversee Museum Collection, Research Artists, Organize Exhibitions, Select Artworks','Only napping','Only shopping','Only driving'], a:0, why:'All 4 preserved.'},
+]
+}
+];
+
+const UNITS = {
+'UNIT I': {lessons:['L1'], desc:'UNIT I = Unit 1: Humanities and the Arts (HUM-1.txt) • Pretests A, D, E'},
+'UNIT II': {lessons:['L2','L3','L4'], desc:'UNIT II = Subject + Content/Function + Perspectives/Artist/Forms (HUM1-UNIT-2-3) • Pretest B: 20 items'},
+'UNIT III': {lessons:['L5'], desc:'UNIT III = Elements, Principles, Production & Curation (LECTURE5.txt) • Pretest C: 25 items (True/False)'}
+};
+
+const PRETESTS = {
+'UNIT I': [
+{q:'What is one of humanity\'s oldest and most universal expressions?', opts:['Mathematics','Art','Science','Language'], a:1, why:'Intro: Art is one of humanity\'s oldest and most universal expressions.'},
+{q:'Art arises from the human capacity for what?', opts:['Logic and reasoning','Creativity and imagination','Memory and recall','Speed and accuracy'], a:1, why:'Art arises from creativity and imagination.'},
+{q:'What allows individuals to transform ideas, feelings, and experiences into tangible or intangible forms?', opts:['Creativity and imagination','Logic and reasoning','Memory and recall','Speed and accuracy'], a:0, why:'Creativity + imagination transform ideas/feelings/experiences.'},
+{q:'What is the ability to generate original ideas and bring something new into existence?', opts:['Imagination','Creativity','Expression','Interpretation'], a:1, why:'Creativity definition.'},
+{q:'Creativity involves which of the following?', opts:['Innovation','Exploration','Pushing beyond the ordinary','All of the above'], a:3, why:'Creativity involves innovation, exploration, pushing beyond ordinary.'},
+{q:'What is the power of the mind to form images, concepts, and sensations without immediate input of the senses?', opts:['Creativity','Innovation','Imagination','Perception'], a:2, why:'Imagination definition.'},
+{q:'Imagination makes art limitless, turning what "is" into what?', opts:['Was','Could be','Should be','Will be'], a:1, why:'Imagination turns what "is" into what "could be."'},
+{q:'Which of the following is NOT a reason why creativity and imagination are important in the arts?', opts:['They expand human experience','They challenge limits','They connect cultures and generations','They limit artistic expression'], a:3, why:'They expand, challenge, connect, shape — not limit.'},
+{q:'How do creativity and imagination expand human experience?', opts:['By allowing us to see the world differently','By limiting our perspective','By copying existing works','By avoiding innovation'], a:0, why:'Expand human experience — see the world differently.'},
+{q:'How do creativity and imagination challenge limits?', opts:['By moving art beyond tradition into innovation','By staying within tradition','By avoiding change','By copying the past'], a:0, why:'Challenge limits — beyond tradition into innovation.'},
+{q:'How do creativity and imagination connect cultures and generations?', opts:['What an artist imagines today might inspire someone hundreds of years later','By isolating cultures from each other','By preventing cultural exchange','By limiting artistic expression'], a:0, why:'Connect cultures and generations.'},
+{q:'How do creativity and imagination shape identities?', opts:['Individuals and nations express who they are through imaginative and creative works','By hiding cultural identity','By preventing self-expression','By limiting national pride'], a:0, why:'Shape identities — express who they are.'},
+{q:'What are basic beliefs, underlying truths, and universal principles that guide our understanding and appreciation of art?', opts:['Assumptions of Arts','Elements of Art','Principles of Design','Functions of Art'], a:0, why:'Assumptions of Arts definition.'},
+{q:'Which assumption of art states that art exists in every culture, society, and historical era?', opts:['Art is Intentional','Art is Symbolic','Art is Universal','Art Reflects and Shapes Society'], a:2, why:'Art is Universal.'},
+{q:'From what to what have human beings always used creativity to communicate, decorate, ritualize, and record experiences?', opts:['From prehistoric cave paintings to modern digital art','From ancient sculptures to modern paintings','From classical music to modern jazz','From oral stories to written novels'], a:0, why:'From prehistoric cave paintings to modern digital art.'},
+{q:'Even in societies with little technology, what is always present?', opts:['Artistic expression through dance, body art, chants, or crafts','Written language','Mathematical systems','Scientific inquiry'], a:0, why:'Dance, body art, chants, crafts always present.'},
+{q:'Which assumption of art is described as a "mirror of life"?', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic'], a:1, why:'Mirror of life = Expresses Human Experiences.'},
+{q:'Which of the following is a personal emotion embodied in art?', opts:['Love','Fear','Joy','All of the above'], a:3, why:'Love, fear, joy, grief are personal emotions.'},
+{q:'Which of the following is a collective experience embodied in art?', opts:['War','Migration','Celebrations','All of the above'], a:3, why:'War, migration, celebrations are collective experiences.'},
+{q:'Which of the following is a cultural value embodied in art?', opts:['Beliefs','Myths','Traditions','All of the above'], a:3, why:'Beliefs, myths, traditions are cultural values.'},
+{q:'What does the assumption "Art Expresses Human Experiences" highlight?', opts:['Behind every artwork is a story — about the artist, the society, or the historical period','Art is random','Art has no meaning','Art is only for decoration'], a:0, why:'Behind every artwork is a story.'},
+{q:'Which assumption of art emphasizes that art is not random and carries meaning, vision, and design?', opts:['Art is Universal','Art is Symbolic','Art is Intentional','Art Reflects and Shapes Society'], a:2, why:'Art is Intentional — not random.'},
+{q:'While creativity may seem spontaneous, art is created with what?', opts:['Intention','Randomness','Accident','Chance'], a:0, why:'Created with intention.'},
+{q:'Art can be created with the intention to do which of the following?', opts:['Beautify','Persuade','Provoke thought','All of the above'], a:3, why:'To beautify, persuade, provoke thought, or simply express.'},
+{q:'Which assumption of art allows multiple interpretations depending on the viewer\'s perspective?', opts:['Art is Universal','Art is Intentional','Art is Symbolic','Art Expresses Human Experiences'], a:2, why:'Art is Symbolic — multiple interpretations.'},
+{q:'Art often goes beyond the literal; it uses what to communicate ideas?', opts:['Symbols','Metaphors','Signs','All of the above'], a:3, why:'Uses symbols, metaphors, and signs.'},
+{q:'Which assumption of art states that it is influenced by social context and, in turn, influences people\'s values?', opts:['Art is Universal','Art is Symbolic','Art is Intentional','Art Reflects and Shapes Society'], a:3, why:'Reflects and shapes Society.'},
+{q:'What are different ways human beings perceive, evaluate, and respond to artworks?', opts:['System of Appreciation','Assumptions of Arts','Elements of Art','Principles of Design'], a:0, why:'System of Appreciation definition.'},
+{q:'Which system of appreciation involves responding through sight, hearing, touch, smell, and taste?', opts:['Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Sensory Appreciation'], a:3, why:'Sensory Appreciation — through the senses.'},
+{q:'Sensory appreciation involves recognizing which of the following without necessarily analyzing deeper meanings?', opts:['Beauty','Harmony','Proportion and appeal','All of the above'], a:3, why:'Beauty, harmony, proportion, and appeal.'}
+],
+'UNIT II': [
+{q:'Which system of appreciation focuses on how an artwork touches the heart or resonates with the viewer\'s experiences?', opts:['Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation'], a:1, why:'Emotional Appreciation — touches the heart.'},
+{q:'Art has the power to move emotions such as:', opts:['Happiness','Sadness','Nostalgia, fear, awe, peace','All of the above'], a:3, why:'Happiness, sadness, nostalgia, fear, awe, peace.'},
+{q:'Which system of appreciation requires understanding symbolism, context, and philosophy?', opts:['Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation'], a:2, why:'Intellectual Appreciation definition.'},
+{q:'Art is appreciated in intellectual appreciation because it stimulates what?', opts:['Thought and reflection','Emotion and feeling','Sensory pleasure','Cultural pride'], a:0, why:'Stimulates thought and reflection.'},
+{q:'Which system of appreciation involves recognizing artworks as part of traditions, heritage, and identity?', opts:['Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation'], a:3, why:'Cultural Appreciation — traditions, heritage, identity.'},
+{q:'Cultural appreciation includes respect for what in art?', opts:['Diversity','Uniformity','Simplicity','Complexity'], a:0, why:'Respect for diversity in art.'},
+{q:'What may seem "strange" to one culture is deeply meaningful to another. This statement is part of which system of appreciation?', opts:['Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation'], a:3, why:'Cultural Appreciation.'},
+{q:'Art is human creativity expressed in what?', opts:['Different forms','Only paintings','Only sculptures','Only music'], a:0, why:'Expressed in different forms.'},
+{q:'Which of the following is a reason why humans create art?', opts:['Entertainment','Religion','Love','All of the above'], a:3, why:'Entertainment, Religion, Love are listed reasons.'},
+{q:'Which of the following is NOT a reason why humans create art?', opts:['Money','Communication','History','Mathematics'], a:3, why:'Money, Communication, History are reasons; Mathematics is not listed.'},
+{q:'Which of the following is a reason why humans create art?', opts:['Identity','Communication','History','All of the above'], a:3, why:'Identity, Communication, History are listed reasons.'},
+{q:'Why did humans create art according to the "To Communicate" section?', opts:['People already communicated through cave paintings','People did not need to communicate','People only communicated through writing','People did not create art to communicate'], a:0, why:'People already communicated through cave paintings.'},
+{q:'Which of the following is a form of art based on other people?', opts:['Painting','Music','Literature','All of the above'], a:3, why:'Painting, Music, Literature listed.'},
+{q:'Which of the following is a form of art based on other people?', opts:['Photography','Mathematics','Engineering','Accounting'], a:0, why:'Photography listed; others are not art forms.'},
+{q:'What is the ability to generate original ideas and bring something new into existence?', opts:['Imagination','Creativity','Expression','Interpretation'], a:1, why:'Creativity definition.'},
+{q:'What is the power of the mind to form images, concepts, and sensations without immediate input of the senses?', opts:['Creativity','Innovation','Imagination','Perception'], a:2, why:'Imagination definition.'},
+{q:'Art is one of humanity\'s oldest and most universal what?', opts:['Expressions','Inventions','Discoveries','Theories'], a:0, why:'Oldest and most universal expressions.'},
+{q:'Art arises from the human capacity for what?', opts:['Creativity and imagination','Logic and reasoning','Memory and recall','Speed and accuracy'], a:0, why:'Creativity and imagination.'},
+{q:'What allows individuals to transform ideas, feelings, and experiences into tangible or intangible forms?', opts:['Creativity and imagination','Logic and reasoning','Memory and recall','Speed and accuracy'], a:0, why:'Creativity + imagination transform ideas/feelings/experiences.'},
+{q:'Which assumption of art states that art exists in every culture, society, and historical era?', opts:['Art is Intentional','Art is Symbolic','Art is Universal','Art Reflects and Shapes Society'], a:2, why:'Art is Universal.'}
+],
+'UNIT III': [
+{qtype:'tf', q:'TRUE or FALSE: Art is one of humanity\'s oldest and most universal expressions.', a:true, why:'Intro: oldest and most universal expressions.'},
+{qtype:'tf', q:'TRUE or FALSE: Art arises from the human capacity for logic and reasoning.', a:false, why:'It arises from creativity and imagination, not logic and reasoning.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity is the ability to generate original ideas and bring something new into existence.', a:true, why:'Creativity definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity involves innovation, exploration, and pushing beyond the ordinary.', a:true, why:'All three are part of creativity.'},
+{qtype:'tf', q:'TRUE or FALSE: Imagination requires immediate input from the senses.', a:false, why:'Imagination forms images without immediate input of the senses.'},
+{qtype:'tf', q:'TRUE or FALSE: Imagination makes art limitless, turning what "is" into what "could be."', a:true, why:'Exact imagination line.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity and imagination expand human experience by allowing us to see the world differently.', a:true, why:'Expand human experience.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity and imagination challenge limits by moving art beyond tradition into innovation.', a:true, why:'Challenge limits.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity and imagination connect cultures and generations.', a:true, why:'Connect cultures and generations.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity and imagination shape identities.', a:true, why:'Shape identities.'},
+{qtype:'tf', q:'TRUE or FALSE: Assumptions of Arts are basic beliefs, underlying truths, and universal principles.', a:true, why:'Assumptions definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is only found in technologically advanced societies.', a:false, why:'Art exists in every culture, even with little technology.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is universal and exists in every culture, society, and historical era.', a:true, why:'Art is Universal.'},
+{qtype:'tf', q:'TRUE or FALSE: Even in societies with little technology, artistic expression is always present.', a:true, why:'Dance, body art, chants, crafts always present.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is often referred to as a "mirror of life."', a:true, why:'Mirror of life = Expresses Human Experiences.'},
+{qtype:'tf', q:'TRUE or FALSE: Art embodies personal emotions, collective experiences, and cultural values.', a:true, why:'Love/fear/joy, war/migration/celebrations, beliefs/myths/traditions.'},
+{qtype:'tf', q:'TRUE or FALSE: Behind every artwork is a story about the artist, the society, or the historical period.', a:true, why:'Exact line from Expresses Human Experiences.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is created randomly without any intention.', a:false, why:'Art is Intentional — not random; carries meaning, vision, design.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is created with intention — whether to beautify, persuade, provoke thought, or simply express.', a:true, why:'Intentional definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is not random; it carries meaning, vision, and design.', a:true, why:'Art is Intentional.'},
+{qtype:'tf', q:'TRUE or FALSE: Symbolism in art allows for multiple interpretations.', a:true, why:'Art is Symbolic — multiple interpretations.'},
+{qtype:'tf', q:'TRUE or FALSE: Art often goes beyond the literal and uses symbols, metaphors, and signs.', a:true, why:'Symbolic definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is influenced by social context and, in turn, influences people\'s values.', a:true, why:'Reflects and shapes Society.'},
+{qtype:'tf', q:'TRUE or FALSE: Sensory appreciation involves responding through sight, hearing, touch, smell, and taste.', a:true, why:'Sensory definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Sensory appreciation involves recognizing beauty, harmony, proportion, and appeal without necessarily analyzing deeper meanings.', a:true, why:'Exact sensory line.'}
+]
+};
+
+const PRETEST_D = [
+{qtype:'tf', q:'TRUE or FALSE: Emotional appreciation focuses on how an artwork touches the heart or resonates with the viewer\'s experiences.', a:true, why:'Emotional Appreciation definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Art has the power to move emotions such as happiness, sadness, nostalgia, fear, awe, and peace.', a:true, why:'All six emotions listed.'},
+{qtype:'tf', q:'TRUE or FALSE: Intellectual appreciation requires understanding symbolism, context, and philosophy.', a:true, why:'Intellectual Appreciation definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is appreciated in intellectual appreciation because it stimulates thought and reflection.', a:true, why:'Stimulates thought and reflection.'},
+{qtype:'tf', q:'TRUE or FALSE: Cultural appreciation involves recognizing artworks as part of traditions, heritage, and identity.', a:true, why:'Cultural Appreciation definition.'},
+{qtype:'tf', q:'TRUE or FALSE: Cultural appreciation includes respect for diversity in art.', a:true, why:'Respect for diversity.'},
+{qtype:'tf', q:'TRUE or FALSE: What may seem "strange" to one culture is deeply meaningful to another.', a:true, why:'Cultural Appreciation line.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is human creativity expressed in different forms.', a:true, why:'Forms of Art intro.'},
+{qtype:'tf', q:'TRUE or FALSE: Humans create art for entertainment, religion, love, money, communication, history, and identity.', a:true, why:'All 7 reasons listed.'},
+{qtype:'tf', q:'TRUE or FALSE: People already communicated through cave paintings.', a:true, why:'To Communicate section.'},
+{qtype:'tf', q:'TRUE or FALSE: Painting, music, literature, and photography are forms of art.', a:true, why:'Four forms listed.'},
+{qtype:'tf', q:'TRUE or FALSE: Creativity is the ability to generate original ideas.', a:true, why:'Creativity definition (short form).'},
+{qtype:'tf', q:'TRUE or FALSE: Imagination is the power of the mind to form images without sensory input.', a:true, why:'Imagination definition (short form).'},
+{qtype:'tf', q:'TRUE or FALSE: Art is universal.', a:true, why:'Art is Universal.'},
+{qtype:'tf', q:'TRUE or FALSE: Art expresses human experiences.', a:true, why:'Expresses Human Experiences.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is intentional.', a:true, why:'Art is Intentional.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is symbolic.', a:true, why:'Art is Symbolic.'},
+{qtype:'tf', q:'TRUE or FALSE: Art reflects and shapes society.', a:true, why:'Reflects and shapes Society.'},
+{qtype:'tf', q:'TRUE or FALSE: Sensory appreciation is one of the systems of appreciation.', a:true, why:'Sensory is a system.'},
+{qtype:'tf', q:'TRUE or FALSE: Emotional appreciation is one of the systems of appreciation.', a:true, why:'Emotional is a system.'},
+{qtype:'tf', q:'TRUE or FALSE: Intellectual appreciation is one of the systems of appreciation.', a:true, why:'Intellectual is a system.'},
+{qtype:'tf', q:'TRUE or FALSE: Cultural appreciation is one of the systems of appreciation.', a:true, why:'Cultural is a system.'},
+{qtype:'tf', q:'TRUE or FALSE: Art can only be appreciated through sight.', a:false, why:'Sight, hearing, touch, smell, and taste — not sight only.'},
+{qtype:'tf', q:'TRUE or FALSE: Art is only for entertainment.', a:false, why:'Entertain, teach, express, inspire, protest — not only entertainment.'},
+{qtype:'tf', q:'TRUE or FALSE: Art has no connection to society.', a:false, why:'Art reflects and shapes society.'}
+];
+
+const PRETEST_E = [
+{qtype:'fill', q:'Identify: One of humanity\'s oldest and most universal expressions.', a:'Art', why:'Intro line.'},
+{qtype:'fill', q:'Identify: The human capacity from which art arises.', a:'Creativity and imagination', why:'Art arises from creativity and imagination.'},
+{qtype:'fill', q:'Identify: The ability to generate original ideas and bring something new into existence.', a:'Creativity', why:'Creativity definition.'},
+{qtype:'fill', q:'Identify: The power of the mind to form images, concepts, and sensations without immediate input of the senses.', a:'Imagination', why:'Imagination definition.'},
+{qtype:'fill', q:'Identify: What imagination turns what "is" into.', a:'Could be', why:'Turns what "is" into what "could be."'},
+{qtype:'fill', q:'Identify: Basic beliefs, underlying truths, and universal principles that guide our understanding and appreciation of art.', a:'Assumptions of Arts', why:'Assumptions definition.'},
+{qtype:'fill', q:'Identify: The assumption of art that states art exists in every culture, society, and historical era.', a:'Art is Universal', why:'Art is Universal.'},
+{qtype:'fill', q:'Identify: The assumption of art that describes art as a "mirror of life."', a:'Art Expresses Human Experiences', why:'Mirror of life.'},
+{qtype:'fill', q:'Identify: The assumption of art that emphasizes art is not random and carries meaning, vision, and design.', a:'Art is Intentional', why:'Art is Intentional.'},
+{qtype:'fill', q:'Identify: The assumption of art that allows multiple interpretations depending on the viewer\'s perspective.', a:'Art is Symbolic', why:'Art is Symbolic.'},
+{qtype:'fill', q:'Identify: The assumption of art that states it is influenced by social context and, in turn, influences people\'s values.', a:'Art Reflects and Shapes Society', why:'Reflects and shapes Society.'},
+{qtype:'fill', q:'Identify: Different ways human beings perceive, evaluate, and respond to artworks.', a:'System of Appreciation', why:'System of Appreciation.'},
+{qtype:'fill', q:'Identify: The system of appreciation that responds through the senses.', a:'Sensory Appreciation', why:'Sensory.'},
+{qtype:'fill', q:'Identify: The system of appreciation that focuses on how art touches the heart.', a:'Emotional Appreciation', why:'Emotional.'},
+{qtype:'fill', q:'Identify: The system of appreciation that requires understanding symbolism, context, and philosophy.', a:'Intellectual Appreciation', why:'Intellectual.'},
+{qtype:'fill', q:'Identify: The system of appreciation that involves recognizing artworks as part of traditions, heritage, and identity.', a:'Cultural Appreciation', why:'Cultural.'},
+{qtype:'fill', q:'Identify: Personal emotions embodied in art.', a:'Love, fear, joy, grief', why:'Personal emotions listed.'},
+{qtype:'fill', q:'Identify: Collective experiences embodied in art.', a:'War, migration, celebrations', why:'Collective experiences listed.'},
+{qtype:'fill', q:'Identify: Cultural values embodied in art.', a:'Beliefs, myths, traditions', why:'Cultural values listed.'},
+{qtype:'fill', q:'Identify: The intention behind art that involves making something beautiful.', a:'Beautify', why:'To beautify.'},
+{qtype:'fill', q:'Identify: The intention behind art that involves convincing others.', a:'Persuade', why:'To persuade.'},
+{qtype:'fill', q:'Identify: The intention behind art that involves stimulating thought.', a:'Provoke thought', why:'To provoke thought.'},
+{qtype:'fill', q:'Identify: The intention behind art that involves simply expressing.', a:'Express', why:'To simply express.'},
+{qtype:'fill', q:'Identify: What art uses to communicate ideas beyond the literal.', a:'Symbols, metaphors, signs', why:'Symbols, metaphors, and signs.'},
+{qtype:'fill', q:'Identify: The reason humans create art that involves amusing others.', a:'Entertainment', why:'Entertainment reason.'},
+{qtype:'fill', q:'Identify: The reason humans create art that involves spiritual belief.', a:'Religion', why:'Religion reason.'},
+{qtype:'fill', q:'Identify: The reason humans create art that involves affection.', a:'Love', why:'Love reason.'},
+{qtype:'fill', q:'Identify: The reason humans create art that involves financial gain.', a:'Money', why:'Money reason.'},
+{qtype:'fill', q:'Identify: The reason humans create art that involves conveying information.', a:'Communication', why:'Communication reason.'},
+{qtype:'fill', q:'Identify: The reason humans create art that involves recording events.', a:'History', why:'History reason.'}
+];
+
+const PRETEST_LIST = [
+{key:'A', unit:'UNIT I', title:'Pretest A', items:PRETESTS['UNIT I']},
+{key:'B', unit:'UNIT II', title:'Pretest B', items:PRETESTS['UNIT II']},
+{key:'C', unit:'UNIT III', title:'Pretest C', items:PRETESTS['UNIT III']},
+{key:'D', unit:'UNIT I', title:'Pretest D', items:PRETEST_D},
+{key:'E', unit:'UNIT I', title:'Pretest E', items:PRETEST_E}
+];
+let currentPretestKey = null;
+let SEL = localStorage.getItem('hum1_unit') || 'UNIT I';
+let XP = parseInt(localStorage.getItem('hum1_xp')||'0');
+let STREAK = parseInt(localStorage.getItem('hum1_streak')||'0');
+let DONE = JSON.parse(localStorage.getItem('hum1_done')||'[]');
+let mode='lesson', steps=[], idx=0, xpRun=0, correctFirst=0, totalQ=0, locked=false, chosen=null, tfChosen=null, lastQuiz='unit', wrongList=[];
+function $(id){return document.getElementById(id)}
+function save(){localStorage.setItem('hum1_xp',XP);localStorage.setItem('hum1_streak',STREAK);localStorage.setItem('hum1_done',JSON.stringify(DONE));localStorage.setItem('hum1_unit',SEL)}
+function refresh(){ $('h-xp').textContent=XP; $('h-streak').textContent=STREAK; if($('r-xp')) $('r-xp').textContent=XP; if($('r-streak')) $('r-streak').textContent=STREAK;
+['UNIT I','UNIT II','UNIT III'].forEach((u,i)=>{ $('u'+(i+1)).classList.toggle('active', u===SEL) });
+$('unit-desc').textContent = UNITS[SEL].desc;
+}
+function setUnit(u){ SEL=u; save(); refresh(); }
+function shuffleArr(a){ for(let i=a.length-1;i>0;i--){ let j=Math.floor(Math.random()*(i+1)); let t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+const BANK_EXTRA=['Universal','Symbolic','Intentional','Society','Culture','Content','Subject','Form','Meaning','Balance','Contrast','Emphasis','Movement','Pattern','Unity','Variety','Proportion','Texture','Space','Line','Shape','Color','Artist','Artisan','Objective','Personal','Social','Physical','Spiritual','Educational','Political','Cultural','Portrait','Landscape','Imagination','Creativity','Heritage','Ritual','Museum','Still','Life','Dance','Music','Theater','Poetry','Prose','Drama'];
+function wordsOf(t){ return String(t).replace(/[“”"']/g,'').split(/\s+/).filter(Boolean); }
+function normT(t){ return String(t).toLowerCase().replace(/[.,!?;:"“”'()\[\]]/g,'').replace(/\s+/g,' ').trim(); }
+function buildBank(s, answer){
+  let ansW = wordsOf(answer);
+  let poolSet = [];
+  if(s.opts){ s.opts.forEach(o=>wordsOf(o).forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); })); }
+  let extra = shuffleArr(BANK_EXTRA.slice());
+  for(let w of extra){ if(poolSet.length>=12) break; if(!ansW.includes(w) && !poolSet.includes(w)) poolSet.push(w); }
+  ansW.forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); });
+  poolSet = poolSet.slice(0,12);
+  s._pool = shuffleArr(poolSet.slice());
+  s._bankAnswer = answer;
+  s._picked = [];
+  s._bank = true;
+}
+function prepQuiz(){ shuffleArr(steps); steps.forEach(s=>{
+  if(s.opts){ s._disp=shuffleArr(s.opts.map((_,i)=>i)); s._a=s._disp.indexOf(s.a); }
+  if(s.qtype==='fill'){ buildBank(s, s.a); }
+  else if(s.opts && wordsOf(s.opts[s.a]).length<=2){ buildBank(s, s.opts[s.a]); }
+}); }
+function lessonsOfUnit(u){ return DATA.filter(L=>UNITS[u].lessons.includes(L.id)); }
+function goHome(){ ['runner','mapview','pretestview','quizview','longquizview','done'].forEach(id=>$(id).classList.add('hidden')); $('bbar').classList.add('hidden'); $('feedback').classList.remove('show'); $('home').classList.remove('hidden'); if($('statsrow')) $('statsrow').classList.remove('hidden'); refresh(); window.scrollTo(0,0); }
+function startLessons(){
+let LS = lessonsOfUnit(SEL);
+steps=[]; LS.forEach(L=>L.slides.forEach(s=>steps.push({kind:'slide',lesson:L,...s})));
+mode='lesson'; begin(SEL+' Lessons ('+LS.length+' lesson'+(LS.length>1?'s':'')+' • '+steps.length+' slides)', SEL+' • LESSONS (slides only, full text)');
+}
+function startQuiz(){
+showQuizPicker();
+}
+function showQuizPicker(){
+$('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('mapview').classList.add('hidden');$('pretestview').classList.add('hidden');$('longquizview').classList.add('hidden');$('quizview').classList.remove('hidden');
+let ql=$('quizlist'); ql.innerHTML='';
+Object.keys(UNITS).forEach(u=>{
+let LS=lessonsOfUnit(u); let n=0; LS.forEach(L=>n+=L.questions.length);
+let d=document.createElement('button'); d.className='menu-card';
+d.innerHTML='<div class="icon">?</div><div><h2>Quiz — '+u+'</h2><p>'+n+' questions • shuffled</p></div>';
+d.onclick=()=>startSpecificQuiz(u); ql.appendChild(d);
+});
+window.scrollTo(0,0);
+}
+function startSpecificQuiz(unit){
+SEL=unit; save(); refresh();
+let LS=lessonsOfUnit(unit);
+steps=[]; LS.forEach(L=>L.questions.forEach(q=>steps.push({kind:'quiz',lesson:L,...q})));
+prepQuiz();
+mode='quiz'; lastQuiz='unit'; totalQ=steps.length; begin('Quiz — '+unit+' ('+steps.length+' items)', unit+' • QUIZ (shuffled)');
+}
+function startLongQuiz(){
+steps=[]; DATA.forEach(L=>L.questions.forEach(q=>steps.push({kind:'quiz',lesson:L,...q})));
+prepQuiz();
+mode='quiz'; lastQuiz='long'; totalQ=steps.length; begin('Long Quiz — all units', 'ALL UNITS • FULL QUIZ (shuffled)');
+}
+function showLongQuizPicker(){
+$('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('mapview').classList.add('hidden');$('pretestview').classList.add('hidden');$('quizview').classList.add('hidden');$('longquizview').classList.remove('hidden');
+let ll=$('longquizlist'); ll.innerHTML='';
+let nQ=0; DATA.forEach(L=>nQ+=L.questions.length);
+let nP=0; if(typeof PRETEST_LIST!=='undefined'){ PRETEST_LIST.forEach(e=>nP+=e.items.length); }
+let d1=document.createElement('button'); d1.className='menu-card';
+d1.innerHTML='<div class="icon">?</div><div><h2>Long Quiz — All Units</h2><p>'+nQ+' lesson questions • shuffled</p></div>';
+d1.onclick=()=>startLongQuiz(); ll.appendChild(d1);
+let d2=document.createElement('button'); d2.className='menu-card';
+d2.innerHTML='<div class="icon">📝</div><div><h2>Long Pretest — All (A–E)</h2><p>'+nP+' pretest items • shuffled</p></div>';
+d2.onclick=()=>startLongPretest(); ll.appendChild(d2);
+window.scrollTo(0,0);
+}
+function startLongPretest(){
+steps=[];
+if(typeof PRETEST_LIST!=='undefined'){
+PRETEST_LIST.forEach(e=>{
+let pseudo={id:'PT-'+e.key, short:e.unit.replace('UNIT ','Unit '), title:e.title+' '+e.unit};
+e.items.forEach(q=>steps.push({kind:'quiz',lesson:pseudo,...q}));
+});
+}
+prepQuiz();
+mode='quiz'; lastQuiz='long'; totalQ=steps.length; begin('Long Pretest — All (A–E) ('+steps.length+' items)', 'ALL PRETESTS • FULL (shuffled)');
+}
+function startPretest(){ showPretests(); }
+function showPretests(){
+$('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('mapview').classList.add('hidden');$('quizview').classList.add('hidden');$('longquizview').classList.add('hidden');$('pretestview').classList.remove('hidden');
+let pl=$('pretestlist'); pl.innerHTML='';
+PRETEST_LIST.forEach(e=>{
+let PT=e.items;
+let isTF = PT.length && PT[0].qtype==='tf';
+let isFill = PT.length && PT[0].qtype==='fill';
+let kind = isTF ? 'true/false' : isFill ? 'identification' : 'multiple-choice';
+let d=document.createElement('button'); d.className='menu-card';
+d.innerHTML='<div class="icon">📝</div><div><h2>'+e.title+' — '+e.unit+'</h2><p>'+PT.length+' '+kind+' items • shuffled</p></div>';
+d.onclick=()=>startSpecificPretest(e.key); pl.appendChild(d);
+});
+window.scrollTo(0,0);
+}
+function startSpecificPretest(key){
+let entry = (typeof PRETEST_LIST!=='undefined' ? PRETEST_LIST.find(x=>x.key===key) : null) || (typeof PRETEST_LIST!=='undefined' ? PRETEST_LIST.find(x=>x.unit===key) : null);
+if(!entry){ let PT0=PRETESTS[key]||[]; entry={key:key, unit:key, title:'Pretest '+key, items:PT0}; }
+SEL=entry.unit; save(); refresh(); currentPretestKey=entry.key;
+let PT=entry.items||[];
+steps=[];
+let pseudo={id:'PT-'+entry.key, short:entry.unit.replace('UNIT ','Unit '), title:entry.title+' '+entry.unit};
+PT.forEach(q=>steps.push({kind:'quiz',lesson:pseudo,...q}));
+prepQuiz();
+let isTF = PT.length && PT[0].qtype==='tf';
+let isFill = PT.length && PT[0].qtype==='fill';
+let kind = isTF ? 'true/false' : isFill ? 'identification' : 'multiple choice';
+mode='quiz'; lastQuiz='pretest'; totalQ=steps.length; begin(entry.title+' '+entry.unit+' ('+steps.length+' items)', entry.unit+' • PRETEST ('+kind+', shuffled)');
+}
+function startSingleLesson(id){
+let L=DATA.find(x=>x.id===id);
+steps=L.slides.map(s=>({kind:'slide',lesson:L,...s})); mode='lesson'; begin(L.title, L.short+' • LESSON (slides only)');
+}
+function showMap(){
+$('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('pretestview').classList.add('hidden');$('quizview').classList.add('hidden');$('longquizview').classList.add('hidden');$('mapview').classList.remove('hidden');
+let ml=$('maplist'); ml.innerHTML='';
+Object.keys(UNITS).forEach(u=>{
+let h=document.createElement('div'); h.className='badge'; h.textContent=u; ml.appendChild(h);
+lessonsOfUnit(u).forEach(L=>{
+let d=document.createElement('div'); d.className='map-row';
+d.textContent=L.emoji+' '+L.short+': '+L.title+' — '+L.slides.length+' slides • '+L.questions.length+' Q'+(DONE.includes(L.id)?' ✅':'');
+d.onclick=()=>startSingleLesson(L.id); ml.appendChild(d);
+});
+});
+window.scrollTo(0,0);
+}
+function begin(title, badge){
+idx=0; xpRun=0; correctFirst=0; wrongList=[]; if(mode==='quiz') totalQ=steps.length;
+$('home').classList.add('hidden');$('mapview').classList.add('hidden');$('pretestview').classList.add('hidden');$('quizview').classList.add('hidden');$('longquizview').classList.add('hidden');$('done').classList.add('hidden');
+if($('statsrow')) $('statsrow').classList.add('hidden');
+$('runner').classList.remove('hidden');$('bbar').classList.remove('hidden');$('bbar').style.visibility='visible';
+$('r-title').textContent=title; $('r-badge').textContent=badge; $('h-mode').textContent=badge;
+render(); window.scrollTo(0,0);
+}
+function goBack(){ if(idx<=0) return; $('feedback').classList.remove('show'); $('bbar').style.visibility='visible'; idx--; render(); }
+function render(){
+locked=false; chosen=null; tfChosen=null;
+let _s0=steps[idx];
+$('pfill').style.width=(steps.length? ((_s0&&_s0.kind==='slide'?(idx+1):idx)/steps.length*100):0)+'%';
+let clip=$('r-clip');
+let s=_s0, st=$('stage'), fb=$('feedback');
+if(!s){ finish(); return; }
+fb.classList.remove('show');
+let skipBtn=$('btn-skip'), nextBtn=$('btn-next');
+if(s.kind==='slide'){
+if(clip) clip.textContent='Clip '+(idx+1)+' / '+steps.length;
+skipBtn.style.visibility='visible'; skipBtn.disabled=(idx===0);
+skipBtn.textContent='← BACK'; skipBtn.onclick=()=>goBack();
+nextBtn.disabled=false;
+nextBtn.textContent = idx===steps.length-1?'FINISH':'CONTINUE ▶';
+st.innerHTML='<div class="card"><div class="slide-kicker">'+s.lesson.short+' • SLIDE '+(idx+1)+'/'+steps.length+'</div><div class="slide-title">'+s.t+'</div></div><div class="card"><p>'+s.b+'</p></div>';
+}else{
+let qnum=steps.slice(0,idx+1).filter(x=>x.kind==='quiz').length;
+if(clip) clip.textContent='Clip '+qnum+' / '+steps.length;
+skipBtn.style.visibility='visible'; skipBtn.disabled=false;
+skipBtn.textContent='SKIP'; skipBtn.onclick=()=>nextStep(true);
+nextBtn.textContent='CHECK'; nextBtn.disabled=true;
+let head='<div class="badge">'+s.lesson.short+' • QUESTION '+qnum+'/'+steps.length+'</div><div class="card"><h3>'+s.q+'</h3>';
+if(s.qtype==='tf'){ head+='<div class="opt" id="o-true" onclick="pickTF(true)">✅ TRUE</div><div class="opt" id="o-false" onclick="pickTF(false)">❌ FALSE</div>'; }
+else if(s._bank){ head+='<p>👆 Tap the words to build the answer, tap a placed word to remove it.</p><div class="bank-blank" id="blank"></div><div class="bank-pool" id="pool"></div>'; }
+else if(s.qtype==='fill'){ head+='<p>✍️ Type your answer</p><input class="fill-input" id="fill" placeholder="type answer…" oninput="onFill()">'; }
+else{ let letters=['A','B','C','D']; let disp=s._disp||s.opts.map((_,i)=>i); head+=disp.map((oi,di)=>'<div class="opt" id="o-'+di+'" onclick="pick('+di+')"><b>'+letters[di]+'.</b>&nbsp;'+s.opts[oi]+'</div>').join(''); }
+head+='</div>'; st.innerHTML=head;
+if(s._bank){ drawBank(); }
+setTimeout(()=>{let f=$('fill'); if(f) f.focus()},100);
+}
+}
+function pick(i){ if(locked) return; document.querySelectorAll('.opt').forEach(e=>e.classList.remove('selected')); $('o-'+i).classList.add('selected'); chosen=i; $('btn-next').disabled=false; }
+function pickTF(v){ if(locked) return; document.querySelectorAll('.opt').forEach(e=>e.classList.remove('selected')); $(v?'o-true':'o-false').classList.add('selected'); tfChosen=v; $('btn-next').disabled=false; }
+function onFill(){ const f=$('fill'); if(!f) return; $('btn-next').disabled = f.value.trim().length===0; }
+function bankText(){ let s=steps[idx]; return (s._picked||[]).map(pi=>s._pool[pi]).join(' '); }
+function drawBank(){
+  let s=steps[idx]; if(!s || !s._bank) return;
+  let blank=$('blank'), pool=$('pool'); if(!blank||!pool) return;
+  blank.innerHTML='';
+  if(!s._picked.length){ blank.innerHTML='<span class="ph">Tap words below…</span>'; }
+  else{ s._picked.forEach((pi,k)=>{ let b=document.createElement('button'); b.className='wchip pick'; b.textContent=s._pool[pi]; b.onclick=()=>untapBank(k); blank.appendChild(b); }); }
+  pool.innerHTML='';
+  s._pool.forEach((w,pi)=>{ let b=document.createElement('button'); b.className='wchip'+(s._picked.includes(pi)?' used':''); b.textContent=w; b.onclick=()=>tapBank(pi); pool.appendChild(b); });
+  $('btn-next').disabled = !s._picked.length;
+}
+function tapBank(pi){ if(locked) return; let s=steps[idx]; if(s._picked.includes(pi)) return; s._picked.push(pi); drawBank(); }
+function untapBank(k){ if(locked) return; let s=steps[idx]; s._picked.splice(k,1); drawBank(); }
+function nextStep(force){
+let s=steps[idx]; if(!s){finish();return;}
+if(s.kind==='slide'){ idx++; if(idx>=steps.length) finish(); else render(); return; }
+if(!force){ checkAnswer(); return; }
+if(!locked && !$('feedback').classList.contains('show')){
+let correctText=''; if(s.qtype==='tf'){ correctText=s.a?'TRUE':'FALSE'; } else if(s._bank){ correctText=s._bankAnswer; } else if(s.qtype==='fill'){ correctText=s.a; } else { correctText=s.opts[s.a]; }
+wrongList=wrongList.filter(w=>w.idx!==idx); wrongList.push({idx:idx, q:s.q, yours:'(skipped)', correct:correctText, why:s.why||''});
+}
+$('feedback').classList.remove('show'); idx++; if(idx>=steps.length) finish(); else render();
+}
+function checkAnswer(){
+let s=steps[idx]; locked=true;
+let correct=false, correctText='', yours='';
+if(s.qtype==='tf'){ correct=(tfChosen===s.a); correctText=s.a?'TRUE':'FALSE'; yours=(tfChosen===null||tfChosen===undefined)?'(no answer)':(tfChosen?'TRUE':'FALSE'); markTF(s.a,tfChosen); }
+else if(s._bank){ let v=normT(bankText()); correct=(v===normT(s._bankAnswer)); correctText=s._bankAnswer; yours=bankText()||'(no answer)'; }
+else if(s.qtype==='fill'){ let f=$('fill'); let v=f?f.value.trim().toLowerCase():''; yours=f&&f.value.trim()?f.value.trim():'(no answer)'; correct=(v===String(s.a).toLowerCase()); correctText=s.a; if(f) f.style.background=correct?'#d7ffb8':'#ffdfe0'; }
+else{ let ai=(s._a!==undefined?s._a:s.a); correct=(chosen===ai); correctText=s.opts[s.a]; let disp=s._disp||s.opts.map((_,i)=>i); yours=(chosen===null||chosen===undefined)?'(no answer)':s.opts[disp[chosen]]; markOpts(ai,chosen); }
+$('bbar').style.visibility='hidden';
+let fb=$('feedback'); fb.classList.add('show');
+if(correct){ xpRun+=10; correctFirst++; fb.className='feedback show ok'; $('fb-title').textContent='🎉 Correct! +10 XP'; $('fb-msg').textContent=s.why||'Nice!'; $('fb-btn').style.background='var(--green)'; }
+else{ wrongList=wrongList.filter(w=>w.idx!==idx); wrongList.push({idx:idx, q:s.q, yours:yours, correct:correctText, why:s.why||''}); fb.className='feedback show no'; $('fb-title').textContent='💔 Answer: '+correctText; $('fb-msg').textContent=(s.why||''); $('fb-btn').style.background='var(--red)'; $('fb-btn').style.color='#fff'; }
+$('pfill').style.width=((idx+1)/steps.length*100)+'%';
+$('fb-btn').textContent='GOT IT'; $('fb-btn').onclick=()=>{ $('bbar').style.visibility='visible'; nextStep(true); };
+}
+function markOpts(a,c){ document.querySelectorAll('.opt').forEach(e=>{e.style.pointerEvents='none'}); let el=$('o-'+a); if(el) el.classList.add('correct'); if(c!==null&&c!==a){let w=$('o-'+c); if(w) w.classList.add('wrong')} }
+function markTF(a,c){ document.querySelectorAll('.opt').forEach(e=>{e.style.pointerEvents='none'}); $(a?'o-true':'o-false').classList.add('correct'); if(c!==a){let el=$(c?'o-true':'o-false'); if(el) el.classList.add('wrong')} }
+function finish(){
+XP+=xpRun; STREAK++; save();
+$('runner').classList.add('hidden');$('bbar').classList.add('hidden');$('feedback').classList.remove('show');$('done').classList.remove('hidden');
+if($('statsrow')) $('statsrow').classList.remove('hidden'); refresh();
+$('done-sub').textContent=$('r-badge').textContent;
+$('done-xp').textContent='+'+xpRun+' XP';
+$('done-acc').textContent = mode==='quiz' ? ('Score: '+correctFirst+'/'+steps.length+' • Total XP: '+XP+' • 🔥'+STREAK) : ('Slides finished: '+steps.length+' • Total XP: '+XP+' • 🔥'+STREAK);
+let dm=$('done-mistakes');
+if(dm){
+if(mode==='quiz' && wrongList.length){
+dm.innerHTML='<div class="badge">RECALL YOUR MISTAKES ('+wrongList.length+')</div>'+wrongList.map((w,i)=>'<div class="card"><p><b>'+(i+1)+'. '+w.q+'</b></p><p>❌ Yours: '+w.yours+'</p><p>✅ Correct: '+w.correct+'</p>'+(w.why?'<p class="src">'+w.why+'</p>':'')+'</div>').join('');
+}else if(mode==='quiz'){
+dm.innerHTML='<div class="card"><p>🌟 Perfect! No mistakes to recall.</p></div>';
+}else{ dm.innerHTML=''; }
+}
+window.scrollTo(0,0);
+}
+refresh();
+document.addEventListener('keydown',e=>{ if(!$('runner').classList.contains('hidden') && e.key==='Enter' && !$('feedback').classList.contains('show')){ let b=$('btn-next'); if(!b.disabled) nextStep(); } });
+</script>
+</body>
+</html>
