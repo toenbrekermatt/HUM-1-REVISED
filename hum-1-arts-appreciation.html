@@ -78,22 +78,129 @@ button.big{flex:1;border:3px solid var(--ink);border-radius:14px;padding:14px;fo
 .slide-title{font-size:clamp(22px,5vw,34px);line-height:1.05;font-weight:900;letter-spacing:-.5px;margin-top:6px;overflow-wrap:break-word}
 .slide-sub{font-weight:700;font-size:15px;margin-top:8px}
 .btn-skip:disabled{background:#ddd;color:#888;box-shadow:none;cursor:not-allowed;transform:none}
+/* ===== DUOLINGO THEME OVERRIDE ===== */
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--duo-green:#58cc02;--duo-green-dark:#58a700;--duo-blue:#1cb0f6;--duo-blue-dark:#1899d6;--duo-red:#ff4b4b;--duo-red-dark:#d33131;--duo-yellow:#ffc800;--duo-yellow-dark:#cc9f00;--duo-purple:#a560ff;--line:#e5e5e5;--ink:#3c3c3c;--muted:#777;--bg:#ffffff;--bg-soft:#f7f7f7}
+body{background:var(--bg)!important;color:var(--ink)!important;font-family:'Nunito',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif!important}
+.topnav{background:#fff!important;color:var(--ink)!important;border-bottom:2px solid var(--line);padding:12px 16px!important;gap:10px}
+.topnav .back{background:none!important;border:none!important;color:#afafaf!important;font-size:20px!important;font-weight:900;font-family:inherit}
+.topnav .title{color:var(--muted)!important;font-weight:800!important;letter-spacing:1px!important;font-size:15px!important}
+.stats{font-family:'Nunito',system-ui,sans-serif!important;font-weight:800!important;color:var(--ink)}
+.stats span span{font-weight:900}
+#h-streak{color:#ff9600}#h-xp{color:#1cb0f6}#r-xp{color:#1cb0f6}#r-streak{color:#ff9600}
+.frame{max-width:600px!important}
+.sheet{background:#fff!important;border:none!important;border-radius:0!important;box-shadow:none!important;padding:24px 16px!important}
+.kicker{color:var(--muted)!important;letter-spacing:1px!important;font-size:14px!important;font-weight:800!important}
+h1.big{font-size:32px!important;line-height:1.15!important;letter-spacing:0!important;color:var(--ink);font-weight:900!important;font-family:'Nunito',system-ui,sans-serif!important}
+.sub{color:var(--muted)!important;font-weight:600!important;font-size:17px!important;font-family:'Nunito',system-ui,sans-serif!important}
+.menu-card{background:#fff!important;border:2px solid var(--line)!important;border-bottom-width:4px!important;border-radius:16px!important;box-shadow:none!important;padding:16px!important;align-items:center!important}
+.menu-card:hover{background:var(--bg-soft)}
+.menu-card h2{font-size:19px!important;font-weight:800!important;font-family:'Nunito',system-ui,sans-serif!important;color:var(--ink)}
+.menu-card p{font-size:15px!important;font-weight:600!important;color:var(--muted);font-family:'Nunito',system-ui,sans-serif!important}
+.menu-card.green{background:var(--duo-green)!important;border-color:var(--duo-green)!important;box-shadow:0 4px 0 var(--duo-green-dark)!important}
+.menu-card.green h2,.menu-card.green p{color:#fff!important}
+.menu-card.green .icon{background:rgba(255,255,255,.22)!important;border:none!important;color:#fff!important}
+.icon{border:2px solid var(--line)!important;box-shadow:none!important;background:var(--bg-soft)!important;border-radius:14px!important;font-size:26px!important}
+.unit-box{background:var(--bg-soft)!important;border:2px solid var(--line)!important;box-shadow:none!important;border-radius:16px!important}
+.unit-box h3{color:var(--muted);letter-spacing:1px!important;font-size:13px!important;font-family:'Nunito',system-ui,sans-serif!important}
+.unit-grid{grid-template-columns:1fr 1fr 1fr!important}
+.unit-btn{background:#fff!important;border:2px solid var(--line)!important;border-bottom-width:4px!important;box-shadow:none!important;border-radius:12px!important;font-family:'Nunito',system-ui,sans-serif!important;font-size:15px!important;font-weight:800!important;color:var(--muted);padding:12px 6px!important}
+.unit-btn.active{background:var(--duo-green)!important;border-color:var(--duo-green)!important;box-shadow:0 4px 0 var(--duo-green-dark)!important;color:#fff!important}
+/* runner */
+.runner{font-family:'Nunito',system-ui,sans-serif!important;max-width:600px!important}
+.run-top{gap:12px!important;margin:8px 0 16px!important}
+.progress-wrap{background:var(--line)!important;border:none!important;height:16px!important}
+.progress-fill{background:var(--duo-green)!important}
+.pill{border:none!important;box-shadow:none!important;background:transparent!important;font-family:'Nunito',system-ui,sans-serif!important;font-weight:800!important;color:var(--muted);padding:6px 4px!important;font-size:15px!important}
+#r-clip{color:#afafaf}
+.badge{background:transparent!important;color:var(--muted)!important;letter-spacing:1px!important;font-size:14px!important;font-weight:800!important;padding:0!important;margin:0 0 4px!important;font-family:'Nunito',system-ui,sans-serif!important}
+#r-title{font-family:'Nunito',system-ui,sans-serif!important;font-weight:800!important;color:var(--ink)}
+#r-badge{display:block!important}
+.card{background:#fff!important;border:2px solid var(--line)!important;border-radius:16px!important;box-shadow:none!important;padding:20px!important}
+.card h3{font-size:19px!important;font-weight:700!important;line-height:1.5!important;color:var(--ink);font-family:'Nunito',system-ui,sans-serif!important}
+.card p,.card li{font-family:'Nunito',system-ui,sans-serif!important;font-weight:500!important;font-size:17px!important;line-height:1.65!important;color:#4b4b4b}
+.card ul{margin-left:20px}
+/* Duolingo lesson hero */
+.duo-lesson{display:flex;gap:14px;align-items:flex-start;margin:8px 0 4px}
+.duo-mascot{width:72px;height:72px;flex-shrink:0;border-radius:24px;background:linear-gradient(180deg,#e8f9d4,#d7ffb8);border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:38px}
+.duo-mascot.blue{background:linear-gradient(180deg,#ddf4ff,#bfe9ff)}
+.duo-mascot.purple{background:linear-gradient(180deg,#ece0ff,#d9c6ff)}
+.duo-mascot.orange{background:linear-gradient(180deg,#ffe9c7,#ffd894)}
+.duo-mascot.pink{background:linear-gradient(180deg,#ffe0e9,#ffc7d8)}
+.slide-kicker{color:var(--muted)!important;letter-spacing:1px!important;font-size:13px!important;font-weight:800!important;font-family:'Nunito',system-ui,sans-serif!important}
+.slide-title{font-family:'Nunito',system-ui,sans-serif!important}
+.slide-sub{font-family:'Nunito',system-ui,sans-serif!important;color:var(--muted)}
+.duo-body{border:2px solid var(--line);background:#fff}
+.duo-body p b{color:var(--ink)}
+.duo-quiz-label{color:var(--muted);font-weight:800;font-size:14px;letter-spacing:1px;margin-bottom:8px}
+/* options */
+.opt{border:2px solid var(--line)!important;border-bottom-width:4px!important;border-radius:12px!important;box-shadow:none!important;background:#fff!important;font-family:'Nunito',system-ui,sans-serif!important;font-weight:600!important;font-size:17px!important;color:var(--ink);padding:14px!important}
+.opt:hover{background:var(--bg-soft)}
+.opt.selected{background:#ddf4ff!important;border-color:var(--duo-blue)!important;box-shadow:0 2px 0 var(--duo-blue-dark)!important;color:#1cb0f6!important}
+.opt.correct{background:#d7ffb8!important;border-color:var(--duo-green-dark)!important;color:#58a700!important}
+.opt.wrong{background:#ffdfe0!important;border-color:var(--duo-red)!important;color:var(--duo-red)!important}
+.fill-input{border:2px solid var(--line)!important;border-radius:12px!important;background:var(--bg-soft)!important;font-family:'Nunito',system-ui,sans-serif!important;box-shadow:none!important;color:var(--ink)}
+.fill-input:focus{outline:none;border-color:var(--duo-blue)!important;background:#fff!important}
+.bank-blank{border:2px dashed var(--line)!important;background:#fff!important;border-radius:12px!important;box-shadow:none!important}
+.bank-pool{gap:10px!important}
+.wchip{border:2px solid var(--line)!important;border-bottom-width:4px!important;box-shadow:none!important;border-radius:12px!important;font-size:16px!important;color:var(--ink)}
+.wchip.pick{background:#ddf4ff!important;border-color:var(--duo-blue)!important;color:#1cb0f6}
+.wchip.used{opacity:.3}
+/* bottom bar + feedback */
+.bottom-bar{background:#fff!important;border-top:2px solid var(--line)!important;padding:14px!important}
+button.big{border-radius:12px!important;font-family:'Nunito',system-ui,sans-serif!important;letter-spacing:1px!important;font-size:15px!important;border:2px solid transparent!important;border-bottom-width:4px!important;box-shadow:none!important}
+.btn-check{background:var(--duo-green)!important;border-color:var(--duo-green)!important;box-shadow:0 4px 0 var(--duo-green-dark)!important;color:#fff!important}
+.btn-check:disabled{background:var(--line)!important;border-color:var(--line)!important;color:#afafaf!important;box-shadow:none!important}
+.btn-skip{background:#fff!important;border-color:var(--line)!important;box-shadow:0 4px 0 var(--line)!important;color:#afafaf!important}
+.feedback{border-top:2px solid var(--line)!important;padding:20px 16px 24px!important}
+.feedback.ok{background:#d7ffb8!important}
+.feedback.no{background:#ffdfe0!important}
+.feedback-inner h3{font-family:'Nunito',system-ui,sans-serif!important;font-size:20px!important;font-weight:900!important}
+.feedback.ok h3{color:#58a700!important}.feedback.no h3{color:#ea2b2b!important}
+.feedback-inner p{font-family:'Nunito',system-ui,sans-serif!important;color:#4b4b4b;font-weight:600}
+#fb-btn{border-radius:12px!important;letter-spacing:1px}
+/* unit banner like Duolingo */
+.duo-unit-banner{background:var(--duo-green);color:#fff;border-radius:16px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;margin:6px 0 18px;font-weight:900}
+.duo-unit-banner.unit2{background:#1cb0f6}.duo-unit-banner.unit3{background:#a560ff}
+.duo-unit-banner small{display:block;font-weight:800;opacity:.9;letter-spacing:1px;font-size:13px}
+.duo-unit-banner strong{font-size:20px}
+/* path */
+.duo-path{display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 0 8px;position:relative}
+.duo-path::before{content:'';position:absolute;top:20px;bottom:20px;width:8px;background:#f0f0f0;border-radius:99px;z-index:0}
+.path-node{position:relative;z-index:1;width:76px;height:76px;border-radius:50%;border:none;cursor:pointer;background:var(--node,#58cc02);box-shadow:0 6px 0 var(--node-dark,#58a700);display:flex;align-items:center;justify-content:center;font-size:32px;transition:transform .1s;margin:10px 0}
+.path-node:active{transform:translateY(4px);box-shadow:0 2px 0 var(--node-dark,#58a700)}
+.path-node.done::after{content:'✔';position:absolute;bottom:-4px;right:-4px;width:28px;height:28px;border-radius:50%;background:#ffc800;border:3px solid #fff;font-size:15px;font-weight:900;color:#fff;display:flex;align-items:center;justify-content:center}
+.path-node.locked{filter:grayscale(.4);opacity:.75}
+.path-label{background:#fff;border:2px solid var(--line);border-radius:12px;padding:8px 12px;font-weight:800;font-size:14px;color:var(--ink);text-align:center;max-width:280px;z-index:1}
+.path-label small{display:block;color:var(--muted);font-weight:700;font-size:12px}
+.map-row{background:#fff!important;border:2px solid var(--line)!important;border-bottom-width:4px!important;box-shadow:none!important;border-radius:14px!important;font-family:'Nunito',system-ui,sans-serif!important}
+.src{font-family:'Nunito',system-ui,sans-serif!important;color:#afafaf}
+#done .card{border:2px solid var(--line)}
+#done-xp{color:#ffc800!important;font-family:'Nunito',system-ui,sans-serif!important}
+@keyframes pop{0%{transform:scale(.96)}60%{transform:scale(1.02)}100%{transform:scale(1)}}
+#stage .card{animation:pop .18s ease}
+@media (max-width:520px){h1.big{font-size:28px!important}.unit-grid{grid-template-columns:1fr 1fr 1fr!important}.duo-mascot{width:60px;height:60px;font-size:30px}}
 </style>
 </head>
 <body>
-<div class="topnav"><button class="back" onclick="goHome()">&#8592;</button><div class="title">HUM-1 ARTS APPRECIATION</div></div>
-<div class="stats" id="statsrow"><span>🔥 <span id="h-streak">0</span></span><span>⚡ <span id="h-xp">0</span></span><span id="h-mode" style="margin-left:auto"></span></div>
+<div class="topnav"><button class="back" onclick="goHome()">✕</button><div class="title">HUM-1 ARTS APPRECIATION</div></div>
+<div class="stats" id="statsrow"><span style="color:#ff9600">🔥 <span id="h-streak">0</span></span><span style="color:#1cb0f6">⚡ <span id="h-xp">0</span></span><span style="color:#ff4b4b">❤ <span id="h-hearts">5</span></span><span id="h-mode" style="margin-left:auto"></span></div>
 
 <!-- HOME -->
 <div id="home" class="frame"><div class="sheet">
-<div class="kicker">HUM-1 ARTS APPRECIATION / HOME</div>
+<div class="kicker">HUM-1 ARTS APPRECIATION • LEARN</div>
 <h1 class="big">Create with purpose.</h1>
-<div class="sub">Choose where you want to begin.</div>
-<button class="menu-card green" onclick="startLessons()"><div class="icon">▶</div><div><h2>Start Lessons</h2><p>Study the selected unit's lessons.</p></div></button>
-<button class="menu-card" onclick="showQuizPicker()"><div class="icon">?</div><div><h2>Quiz</h2><p>Choose a unit quiz to take.</p></div></button>
-<button class="menu-card" onclick="showLongQuizPicker()"><div class="icon">?</div><div><h2>Long Quiz</h2><p>Choose a full quiz to take.</p></div></button>
-<button class="menu-card" onclick="startPretest()"><div class="icon">📝</div><div><h2>Pretests</h2><p>Choose a pretest to take.</p></div></button>
-<button class="menu-card" onclick="showMap()"><div class="icon">▦</div><div><h2>Course Map</h2><p>See the HUM1 sequence.</p></div></button>
+<div class="sub">Pick a lesson to keep your streak going.</div>
+<div class="duo-unit-banner" id="unit-banner"><div><small id="unit-banner-kicker">UNIT I • 1 LESSON</small><strong id="unit-banner-title">Humanities and the Arts</strong></div><div style="font-size:36px" id="unit-banner-emoji">🎨</div></div>
+<button class="menu-card green" onclick="startLessons()"><div class="icon">▶</div><div><h2>START LESSONS</h2><p>Study the selected unit's slides.</p></div></button>
+<button class="menu-card" onclick="showMap()"><div class="icon">🛤️</div><div><h2>LEARNING PATH</h2><p>Follow the Duolingo-style path.</p></div></button>
+<button class="menu-card" onclick="showQuizPicker()"><div class="icon">💪</div><div><h2>PRACTICE QUIZ</h2><p>Choose a unit quiz to take.</p></div></button>
+<button class="menu-card" onclick="showLongQuizPicker()"><div class="icon">🏆</div><div><h2>LONG QUIZ</h2><p>Test everything at once.</p></div></button>
+<button class="menu-card" onclick="startPretest()"><div class="icon">📝</div><div><h2>PRETESTS</h2><p>Check what you already know.</p></div></button>
 <div class="unit-box"><h3>CHOOSE A UNIT FOR LESSONS &amp; QUIZZES</h3><div class="unit-grid">
 <button class="unit-btn active" id="u1" onclick="setUnit('UNIT I')">UNIT I</button>
 <button class="unit-btn" id="u2" onclick="setUnit('UNIT II')">UNIT II</button>
@@ -103,7 +210,7 @@ button.big{flex:1;border:3px solid var(--ink);border-radius:14px;padding:14px;fo
 
 <!-- LESSON / QUIZ RUNNER -->
 <div id="runner" class="runner hidden">
-<div class="run-top"><div class="progress-wrap"><div class="progress-fill" id="pfill"></div></div><div class="pill" id="r-clip">Clip 1 / 1</div><div class="pill">⭐ <span id="r-xp">0</span></div><div class="pill">🔥 <span id="r-streak">0</span></div></div>
+<div class="run-top"><button class="back" onclick="goHome()" style="background:none;border:none;color:#afafaf;font-size:20px;font-weight:900;cursor:pointer;font-family:inherit">✕</button><div class="progress-wrap"><div class="progress-fill" id="pfill"></div></div><div class="pill" style="color:#ff4b4b">❤ 5</div><div class="pill" id="r-clip">1 / 1</div><div class="pill">⭐ <span id="r-xp">0</span></div><div class="pill">🔥 <span id="r-streak">0</span></div></div>
 <div class="badge" id="r-badge">LESSON</div>
 <h1 class="big" id="r-title" style="font-size:30px"></h1>
 <div id="stage"></div>
@@ -119,11 +226,11 @@ button.big{flex:1;border:3px solid var(--ink);border-radius:14px;padding:14px;fo
 
 <!-- MAP -->
 <div id="mapview" class="frame hidden"><div class="sheet">
-<div class="kicker">HUM 1 / COURSE MAP</div>
-<h1 class="big" style="font-size:38px">HUM1 sequence.</h1>
-<div class="sub">Tap a lesson to study its slides only.</div>
+<div class="kicker">HUM 1 / LEARNING PATH</div>
+<h1 class="big" style="font-size:32px">Follow the path.</h1>
+<div class="sub">Tap a node to study that lesson.</div>
 <div id="maplist"></div>
-<button class="menu-card" onclick="goHome()"><div class="icon">←</div><div><h2>Back Home</h2><p>Choose lessons, quiz, or long quiz.</p></div></button>
+<button class="menu-card" onclick="goHome()"><div class="icon">←</div><div><h2>BACK HOME</h2><p>Choose lessons, quiz, or long quiz.</p></div></button>
 </div></div>
 
 <!-- PRETEST PICKER -->
@@ -155,12 +262,12 @@ button.big{flex:1;border:3px solid var(--ink);border-radius:14px;padding:14px;fo
 
 <!-- DONE -->
 <div id="done" class="frame hidden"><div class="sheet" style="text-align:center">
-<div style="font-size:70px">🎉</div>
-<h1 class="big" style="font-size:36px" id="done-title">Complete!</h1>
+<div style="font-size:72px">🏆</div>
+<h1 class="big" style="font-size:32px" id="done-title">Lesson complete!</h1>
 <p class="sub" id="done-sub"></p>
-<div class="card"><div id="done-xp" style="font-size:40px;font-weight:900"></div><p id="done-acc"></p></div>
+<div class="card" style="border-color:#ffc800!important;background:#fffbe6!important"><div id="done-xp" style="font-size:40px;font-weight:900"></div><p id="done-acc"></p></div>
 <div id="done-mistakes" style="text-align:left"></div>
-<button class="menu-card green" onclick="goHome()"><div class="icon">▶</div><div><h2>Back Home</h2><p>Pick the next unit or quiz.</p></div></button>
+<button class="menu-card green" onclick="goHome()"><div class="icon">▶</div><div><h2>CONTINUE</h2><p>Back to the path.</p></div></button>
 </div></div>
 
 <script>
@@ -519,9 +626,12 @@ let DONE = JSON.parse(localStorage.getItem('hum1_done')||'[]');
 let mode='lesson', steps=[], idx=0, xpRun=0, correctFirst=0, totalQ=0, locked=false, chosen=null, tfChosen=null, lastQuiz='unit', wrongList=[];
 function $(id){return document.getElementById(id)}
 function save(){localStorage.setItem('hum1_xp',XP);localStorage.setItem('hum1_streak',STREAK);localStorage.setItem('hum1_done',JSON.stringify(DONE));localStorage.setItem('hum1_unit',SEL)}
-function refresh(){ $('h-xp').textContent=XP; $('h-streak').textContent=STREAK; if($('r-xp')) $('r-xp').textContent=XP; if($('r-streak')) $('r-streak').textContent=STREAK;
+function refresh(){ $('h-xp').textContent=XP; $('h-streak').textContent=STREAK; if($('r-xp')) $('r-xp').textContent=XP; if($('r-streak')) $('r-streak').textContent=STREAK; if($('h-hearts')) $('h-hearts').textContent='5';
 ['UNIT I','UNIT II','UNIT III'].forEach((u,i)=>{ $('u'+(i+1)).classList.toggle('active', u===SEL) });
 $('unit-desc').textContent = UNITS[SEL].desc;
+try{
+let LS=lessonsOfUnit(SEL); let ub=$('unit-banner'); if(ub){ ub.className='duo-unit-banner'+(SEL==='UNIT II'?' unit2':SEL==='UNIT III'?' unit3':''); let k=$('unit-banner-kicker'); if(k) k.textContent=SEL+' • '+LS.length+' LESSON'+(LS.length>1?'S':''); let t=$('unit-banner-title'); if(t) t.textContent=LS.length===1?LS[0].title:(SEL==='UNIT II'?'Subject, Content & Forms':'Elements & Design'); let e=$('unit-banner-emoji'); if(e) e.textContent=LS.length?LS[0].emoji:'🎨'; }
+}catch(_){} 
 }
 function setUnit(u){ SEL=u; save(); refresh(); }
 function shuffleArr(a){ for(let i=a.length-1;i>0;i--){ let j=Math.floor(Math.random()*(i+1)); let t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
@@ -639,13 +749,19 @@ steps=L.slides.map(s=>({kind:'slide',lesson:L,...s})); mode='lesson'; begin(L.ti
 function showMap(){
 $('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('pretestview').classList.add('hidden');$('quizview').classList.add('hidden');$('longquizview').classList.add('hidden');$('mapview').classList.remove('hidden');
 let ml=$('maplist'); ml.innerHTML='';
-Object.keys(UNITS).forEach(u=>{
-let h=document.createElement('div'); h.className='badge'; h.textContent=u; ml.appendChild(h);
-lessonsOfUnit(u).forEach(L=>{
-let d=document.createElement('div'); d.className='map-row';
-d.textContent=L.emoji+' '+L.short+': '+L.title+' — '+L.slides.length+' slides • '+L.questions.length+' Q'+(DONE.includes(L.id)?' ✅':'');
-d.onclick=()=>startSingleLesson(L.id); ml.appendChild(d);
-});
+let allLessons=[]; Object.keys(UNITS).forEach(u=>{ lessonsOfUnit(u).forEach(L=>allLessons.push({unit:u,lesson:L})); });
+let path=document.createElement('div'); path.className='duo-path'; ml.appendChild(path);
+allLessons.forEach((item,i)=>{
+let L=item.lesson, u=item.unit;
+let done=DONE.includes(L.id);
+let node=document.createElement('button'); node.className='path-node'+(done?' done':'');
+node.style.setProperty('--node', L.color||'#58cc02'); node.style.setProperty('--node-dark', 'rgba(0,0,0,.25)');
+node.style.marginLeft=[ '0px','-70px','70px','-40px','40px','0px'][i%6];
+node.textContent=L.emoji||'⭐'; node.title=L.title;
+node.onclick=()=>startSingleLesson(L.id); path.appendChild(node);
+let lab=document.createElement('div'); lab.className='path-label';
+lab.innerHTML='<small>'+u+' • '+(done?'COMPLETED':'LESSON '+(i+1))+'</small>'+L.short+': '+L.title+'<br><small>'+L.slides.length+' slides • '+L.questions.length+' questions'+(done?' • ✔':'')+'</small>';
+lab.style.cursor='pointer'; lab.onclick=()=>startSingleLesson(L.id); path.appendChild(lab);
 });
 window.scrollTo(0,0);
 }
@@ -668,19 +784,21 @@ if(!s){ finish(); return; }
 fb.classList.remove('show');
 let skipBtn=$('btn-skip'), nextBtn=$('btn-next');
 if(s.kind==='slide'){
-if(clip) clip.textContent='Clip '+(idx+1)+' / '+steps.length;
+if(clip) clip.textContent=(idx+1)+' / '+steps.length;
 skipBtn.style.visibility='visible'; skipBtn.disabled=(idx===0);
-skipBtn.textContent='← BACK'; skipBtn.onclick=()=>goBack();
+skipBtn.textContent='BACK'; skipBtn.onclick=()=>goBack();
 nextBtn.disabled=false;
-nextBtn.textContent = idx===steps.length-1?'FINISH':'CONTINUE ▶';
-st.innerHTML='<div class="card"><div class="slide-kicker">'+s.lesson.short+' • SLIDE '+(idx+1)+'/'+steps.length+'</div><div class="slide-title">'+s.t+'</div></div><div class="card"><p>'+s.b+'</p></div>';
+nextBtn.textContent = idx===steps.length-1?'FINISH':'CONTINUE';
+let mcls=s.lesson.id==='L2'?'blue':s.lesson.id==='L3'?'purple':s.lesson.id==='L4'?'orange':s.lesson.id==='L5'?'pink':'';
+let memoji=s.lesson.emoji||'🎨';
+st.innerHTML='<div class="duo-lesson"><div class="duo-mascot '+mcls+'">'+memoji+'</div><div><div class="slide-kicker">'+s.lesson.short+' • SLIDE '+(idx+1)+' OF '+steps.length+'</div><div class="slide-title">'+s.t+'</div></div></div><div class="card duo-body"><p>'+s.b+'</p></div>';
 }else{
 let qnum=steps.slice(0,idx+1).filter(x=>x.kind==='quiz').length;
-if(clip) clip.textContent='Clip '+qnum+' / '+steps.length;
+if(clip) clip.textContent=qnum+' / '+steps.length;
 skipBtn.style.visibility='visible'; skipBtn.disabled=false;
 skipBtn.textContent='SKIP'; skipBtn.onclick=()=>nextStep(true);
 nextBtn.textContent='CHECK'; nextBtn.disabled=true;
-let head='<div class="badge">'+s.lesson.short+' • QUESTION '+qnum+'/'+steps.length+'</div><div class="card"><h3>'+s.q+'</h3>';
+let head='<div class="badge">'+s.lesson.short+' • QUESTION '+qnum+' OF '+steps.length+'</div><div class="duo-quiz-label">Choose the correct answer</div><div class="card"><h3>'+s.q+'</h3>';
 if(s.qtype==='tf'){ head+='<div class="opt" id="o-true" onclick="pickTF(true)">✅ TRUE</div><div class="opt" id="o-false" onclick="pickTF(false)">❌ FALSE</div>'; }
 else if(s._bank){ head+='<p>👆 Tap the words to build the answer, tap a placed word to remove it.</p><div class="bank-blank" id="blank"></div><div class="bank-pool" id="pool"></div>'; }
 else if(s.qtype==='fill'){ head+='<p>✍️ Type your answer</p><input class="fill-input" id="fill" placeholder="type answer…" oninput="onFill()">'; }
@@ -725,15 +843,19 @@ else if(s.qtype==='fill'){ let f=$('fill'); let v=f?f.value.trim().toLowerCase()
 else{ let ai=(s._a!==undefined?s._a:s.a); correct=(chosen===ai); correctText=s.opts[s.a]; let disp=s._disp||s.opts.map((_,i)=>i); yours=(chosen===null||chosen===undefined)?'(no answer)':s.opts[disp[chosen]]; markOpts(ai,chosen); }
 $('bbar').style.visibility='hidden';
 let fb=$('feedback'); fb.classList.add('show');
-if(correct){ xpRun+=10; correctFirst++; fb.className='feedback show ok'; $('fb-title').textContent='🎉 Correct! +10 XP'; $('fb-msg').textContent=s.why||'Nice!'; $('fb-btn').style.background='var(--green)'; }
-else{ wrongList=wrongList.filter(w=>w.idx!==idx); wrongList.push({idx:idx, q:s.q, yours:yours, correct:correctText, why:s.why||''}); fb.className='feedback show no'; $('fb-title').textContent='💔 Answer: '+correctText; $('fb-msg').textContent=(s.why||''); $('fb-btn').style.background='var(--red)'; $('fb-btn').style.color='#fff'; }
+if(correct){ xpRun+=10; correctFirst++; fb.className='feedback show ok'; $('fb-title').textContent='Awesome! +10 XP'; $('fb-msg').textContent=s.why||'Nicely done!'; $('fb-btn').style.background='var(--duo-green)'; $('fb-btn').style.color='#fff'; }
+else{ wrongList=wrongList.filter(w=>w.idx!==idx); wrongList.push({idx:idx, q:s.q, yours:yours, correct:correctText, why:s.why||''}); fb.className='feedback show no'; $('fb-title').textContent='Correct answer: '+correctText; $('fb-msg').textContent=(s.why||''); $('fb-btn').style.background='var(--duo-red)'; $('fb-btn').style.color='#fff'; }
 $('pfill').style.width=((idx+1)/steps.length*100)+'%';
-$('fb-btn').textContent='GOT IT'; $('fb-btn').onclick=()=>{ $('bbar').style.visibility='visible'; nextStep(true); };
+$('fb-btn').textContent='CONTINUE'; $('fb-btn').onclick=()=>{ $('bbar').style.visibility='visible'; nextStep(true); };
 }
 function markOpts(a,c){ document.querySelectorAll('.opt').forEach(e=>{e.style.pointerEvents='none'}); let el=$('o-'+a); if(el) el.classList.add('correct'); if(c!==null&&c!==a){let w=$('o-'+c); if(w) w.classList.add('wrong')} }
 function markTF(a,c){ document.querySelectorAll('.opt').forEach(e=>{e.style.pointerEvents='none'}); $(a?'o-true':'o-false').classList.add('correct'); if(c!==a){let el=$(c?'o-true':'o-false'); if(el) el.classList.add('wrong')} }
 function finish(){
-XP+=xpRun; STREAK++; save();
+XP+=xpRun; STREAK++;
+try{
+if(mode==='lesson'){ steps.forEach(st=>{ if(st.lesson && st.lesson.id && !DONE.includes(st.lesson.id)) DONE.push(st.lesson.id); }); }
+}catch(_){}
+save();
 $('runner').classList.add('hidden');$('bbar').classList.add('hidden');$('feedback').classList.remove('show');$('done').classList.remove('hidden');
 if($('statsrow')) $('statsrow').classList.remove('hidden'); refresh();
 $('done-sub').textContent=$('r-badge').textContent;
