@@ -185,10 +185,26 @@ button.big{border-radius:12px!important;font-family:'Nunito',system-ui,sans-seri
 #stage .card{animation:pop .18s ease}
 @media (max-width:520px){h1.big{font-size:28px!important}.unit-grid{grid-template-columns:1fr 1fr 1fr!important}.duo-mascot{width:60px;height:60px;font-size:30px}}
 </style>
+<style>
+.bottom-inner{align-items:center}
+.btn-skip{background:transparent!important;border-color:transparent!important;box-shadow:none!important;color:#afafaf!important;flex:0 0 auto;min-width:110px}
+.btn-skip:not(:disabled):hover{background:#f7f7f7!important}
+.btn-check{flex:1}
+.duo-lesson{align-items:center}
+.duo-lesson>div:last-child{flex:1;min-width:0}
+.slide-title{font-size:26px!important;line-height:1.2!important}
+.duo-body ul{list-style:none;margin-left:0!important;padding:0}
+.duo-body ul li{position:relative;padding-left:30px;margin-bottom:10px!important}
+.duo-body ul li::before{content:'\2713';position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:#e8f9d4;color:#58a700;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center}
+#stage{animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.run-top .pill{font-size:14px!important}
+@media(max-width:520px){.run-top{gap:8px!important}#r-clip{display:none}.btn-skip{min-width:80px}}
+</style>
 </head>
 <body>
 <div class="topnav"><button class="back" onclick="goHome()">✕</button><div class="title">HUM-1 ARTS APPRECIATION</div></div>
-<div class="stats" id="statsrow"><span style="color:#ff9600">🔥 <span id="h-streak">0</span></span><span style="color:#1cb0f6">⚡ <span id="h-xp">0</span></span><span style="color:#ff4b4b">❤ <span id="h-hearts">5</span></span><span id="h-mode" style="margin-left:auto"></span></div>
+<div class="stats" id="statsrow"><span style="color:#ff9600">🔥 <span id="h-streak">0</span></span><span style="color:#1cb0f6">⚡ <span id="h-xp">0</span></span><span id="h-mode" style="margin-left:auto"></span></div>
 
 <!-- HOME -->
 <div id="home" class="frame"><div class="sheet">
@@ -210,7 +226,7 @@ button.big{border-radius:12px!important;font-family:'Nunito',system-ui,sans-seri
 
 <!-- LESSON / QUIZ RUNNER -->
 <div id="runner" class="runner hidden">
-<div class="run-top"><button class="back" onclick="goHome()" style="background:none;border:none;color:#afafaf;font-size:20px;font-weight:900;cursor:pointer;font-family:inherit">✕</button><div class="progress-wrap"><div class="progress-fill" id="pfill"></div></div><div class="pill" style="color:#ff4b4b">❤ 5</div><div class="pill" id="r-clip">1 / 1</div><div class="pill">⭐ <span id="r-xp">0</span></div><div class="pill">🔥 <span id="r-streak">0</span></div></div>
+<div class="run-top"><button class="back" onclick="goHome()" style="background:none;border:none;color:#afafaf;font-size:20px;font-weight:900;cursor:pointer;font-family:inherit">✕</button><div class="progress-wrap"><div class="progress-fill" id="pfill"></div></div><div class="pill" id="r-clip">1 / 1</div><div class="pill">⭐ <span id="r-xp">0</span></div><div class="pill">🔥 <span id="r-streak">0</span></div></div>
 <div class="badge" id="r-badge">LESSON</div>
 <h1 class="big" id="r-title" style="font-size:30px"></h1>
 <div id="stage"></div>
@@ -618,6 +634,212 @@ const PRETEST_LIST = [
 {key:'D', unit:'UNIT I', title:'Pretest D', items:PRETEST_D},
 {key:'E', unit:'UNIT I', title:'Pretest E', items:PRETEST_E}
 ];
+/* MOCKTESTS DATA - generated from hum1-mocktests.html : replaces quiz banks */
+const MOCK_QUIZZES = {
+'UNIT I': [
+{q:'What is the ability to generate original ideas and bring something new into existence?', opts:['Imagination','Creativity','Expression','Symbolism'], a:1, why:'Creativity – ability to generate original ideas.'},
+{q:'What is the power of the mind to form images, concepts, and sensations without immediate input of the senses?', opts:['Creativity','Imagination','Perception','Intuition'], a:1, why:'Imagination – power of the mind to form images.'},
+{q:'Which of the following is NOT one of the reasons why creativity and imagination are important in the arts?', opts:['They expand human experience','They challenge limits','They guarantee financial success','They shape identities'], a:2, why:'Guarantee financial success is NOT listed; the four are expand experience, challenge limits, connect cultures, shape identities.'},
+{q:'Which assumption states that art exists in every culture, society, and historical era?', opts:['Art is intentional','Art is symbolic','Art is universal','Art reflects society'], a:2, why:'Art is universal – exists in every culture, society, era.'},
+{q:'“Art is a mirror of life” is most closely related to which assumption?', opts:['Art is universal','Art expresses human experiences','Art is symbolic','Art is intentional'], a:1, why:'Art expresses human experiences – “mirror of life”.'},
+{q:'Which assumption emphasizes that art is not random and carries meaning, vision, and design?', opts:['Art is universal','Art is symbolic','Art is intentional','Art reflects society'], a:2, why:'Art is intentional – not random; carries meaning.'},
+{q:'Which assumption allows multiple interpretations depending on the viewer’s perspective?', opts:['Art is universal','Art is expressive','Art is symbolic','Art is intentional'], a:2, why:'Art is symbolic – multiple interpretations, symbols.'},
+{q:'Which assumption states that art is influenced by social context and, in turn, influences people’s values?', opts:['Art is universal','Art is intentional','Art is symbolic','Art reflects and shapes society'], a:3, why:'Art reflects and shapes society.'},
+{q:'Which system of appreciation responds through senses like sight, hearing, touch, and recognizes beauty, harmony, and proportion?', opts:['Emotional appreciation','Sensory appreciation','Intellectual appreciation','Cultural appreciation'], a:1, why:'Sensory appreciation – responds through senses.'},
+{q:'Which system of appreciation focuses on how an artwork touches the heart or resonates with the viewer’s experiences?', opts:['Sensory appreciation','Intellectual appreciation','Emotional appreciation','Cultural appreciation'], a:2, why:'Emotional appreciation – touches the heart.'},
+{q:'Which system of appreciation requires understanding symbolism, context, and philosophy?', opts:['Sensory appreciation','Emotional appreciation','Intellectual appreciation','Cultural appreciation'], a:2, why:'Intellectual appreciation – requires understanding symbolism.'},
+{q:'Which system of appreciation involves recognizing artworks as part of traditions, heritage, and identity?', opts:['Sensory appreciation','Emotional appreciation','Intellectual appreciation','Cultural appreciation'], a:3, why:'Cultural appreciation – traditions, heritage, identity.'},
+{q:'Which of the following is NOT listed as a reason why humans create art?', opts:['Entertainment','Religion','Money','Only for decoration'], a:3, why:'Only for decoration is NOT listed; the module lists entertainment, religion, love, money, communication, history, identity.'},
+{q:'According to the module, which four forms of art are listed based on other people?', opts:['Painting, Music, Literature, Photography','Dance, Theater, Sculpture, Architecture','Poetry, Prose, Drama, Film','Design, Crafts, Fashion, Industrial Arts'], a:0, why:'Painting, Music, Literature, Photography.'},
+{q:'What is the general definition of “Assumptions of Arts”?', opts:['Theory-based understanding of art','Basic beliefs, underlying truths, and universal principles that guide our understanding and appreciation of art','The process of creating art','The history of art movements'], a:1, why:'Basic beliefs, underlying truths, universal principles.'},
+{qtype:'tf', q:'Creativity involves innovation, exploration, and pushing beyond the ordinary.', a:true, why:'True – creativity involves innovation and exploration.'},
+{qtype:'tf', q:'Imagination makes art limitless, turning what “is” into what “could be.”', a:true, why:'True – imagination makes art limitless.'},
+{qtype:'tf', q:'Creativity and imagination connect cultures and generations—what an artist imagines today might inspire someone hundreds of years later.', a:true, why:'True – connects cultures and generations.'},
+{qtype:'tf', q:'Art is only present in societies with advanced technology.', a:false, why:'False – art exists even in societies with little technology.'},
+{qtype:'tf', q:'Art can be influenced by social context and, in turn, influences people’s values.', a:true, why:'True – art reflects and shapes society.'},
+{qtype:'tf', q:'Emotional appreciation focuses on understanding symbolism, context, and philosophy.', a:false, why:'False – that is intellectual appreciation; emotional is about feelings.'},
+{qtype:'tf', q:'People already communicated through cave paintings before other forms of art.', a:true, why:'True – people communicated through cave paintings.'},
+{qtype:'tf', q:'Art is created with intention, whether to beautify, persuade, provoke thought, or simply express.', a:true, why:'True – art is created with intention.'},
+{qtype:'tf', q:'Cultural appreciation includes respect for diversity in art: what may seem “strange” to one culture is deeply meaningful to another.', a:true, why:'True – cultural appreciation respects diversity.'},
+{qtype:'tf', q:'Sensory appreciation involves analyzing deeper meanings and symbolism.', a:false, why:'False – sensory appreciation does not analyze deeper meanings.'},
+{qtype:'tf', q:'Art can express personal emotions, collective experiences, and cultural values.', a:true, why:'True – art expresses personal, collective, and cultural values.'},
+{qtype:'tf', q:'Symbolism makes art powerful because it allows multiple interpretations depending on the viewer’s perspective.', a:true, why:'True – symbolism allows multiple interpretations.'},
+{qtype:'fill', q:'________ is the ability to generate original ideas and bring something new into existence.', a:'Creativity', why:'Ability to generate original ideas.'},
+{qtype:'fill', q:'________ is the power of the mind to form images, concepts, and sensations without immediate input of the senses.', a:'Imagination', why:'Power of the mind to form images.'},
+{qtype:'fill', q:'The assumption that art exists in every culture, society, and historical era is called Art is ________.', a:'Universal', why:'Art exists in every culture and era.'},
+{qtype:'fill', q:'Art is often referred to as a “________ of life.”', a:'mirror', why:'“Mirror of life”'},
+{qtype:'fill', q:'The assumption that art uses symbols, metaphors, and signs to communicate ideas is Art is ________.', a:'Symbolic', why:'Art uses symbols, metaphors, signs.'},
+{qtype:'fill', q:'The assumption that art is influenced by social context and, in turn, influences people’s values is Art ________ and ________ Society.', a:'reflects / shapes', why:'Art reflects and shapes society.'},
+{qtype:'fill', q:'________ appreciation responds through senses like sight, hearing, touch, smell, and taste.', a:'Sensory', why:'Responds through senses.'},
+{qtype:'fill', q:'________ appreciation focuses on how an artwork touches the heart or resonates with the viewer’s experiences.', a:'Emotional', why:'Touches the heart.'},
+{qtype:'fill', q:'________ appreciation requires understanding symbolism, context, and philosophy.', a:'Intellectual', why:'Requires understanding symbolism, context, philosophy.'},
+{qtype:'fill', q:'________ appreciation involves recognizing artworks as part of traditions, heritage, and identity.', a:'Cultural', why:'Recognizes traditions, heritage, identity.'},
+{qtype:'fill', q:'One of the reasons humans create art is to ________, as seen in cave paintings.', a:'communicate', why:'People communicated through cave paintings.'},
+{qtype:'fill', q:'The four forms of art listed based on other people are Painting, Music, Literature, and ________.', a:'Photography', why:'Fourth form based on other people.'},
+{qtype:'fill', q:'According to the module, art can express personal emotions, collective experiences, and ________ values.', a:'cultural', why:'Personal emotions, collective experiences, cultural values.'},
+{qtype:'fill', q:'________ and imagination are important because they shape identities—individuals and nations express who they are through imaginative and creative works.', a:'Creativity', why:'Creativity and imagination shape identities.'},
+{qtype:'fill', q:'Art arises from the human capacity for ________ and imagination.', a:'creativity', why:'Art arises from creativity and imagination.'},
+{q:'Ability to generate original ideas and bring something new into existence.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:9, why:'Creativity'},
+{q:'Power of the mind to form images without immediate sensory input.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:10, why:'Imagination'},
+{q:'Art exists in every culture, society, and historical era.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:0, why:'Art is Universal'},
+{q:'Art is a “mirror of life.”', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:1, why:'Art Expresses Human Experiences'},
+{q:'Art is created with intention, not random.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:2, why:'Art is Intentional'},
+{q:'Art uses symbols, metaphors, and signs.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:3, why:'Art is Symbolic'},
+{q:'Art influences and is influenced by society.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:4, why:'Art Reflects and Shapes Society'},
+{q:'Appreciation through senses and recognition of beauty.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:5, why:'Sensory Appreciation'},
+{q:'Appreciation that touches the heart and emotions.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:6, why:'Emotional Appreciation'},
+{q:'Appreciation that involves understanding symbolism and context.', opts:['Art is Universal','Art Expresses Human Experiences','Art is Intentional','Art is Symbolic','Art Reflects and Shapes Society','Sensory Appreciation','Emotional Appreciation','Intellectual Appreciation','Cultural Appreciation','Creativity','Imagination'], a:7, why:'Intellectual Appreciation'},
+],
+'UNIT II': [
+{q:'The subject of art answers which question?', opts:['What is the artist trying to say?','What is the artwork about?','How was it made?','How much does it cost?'], a:1, why:'What is the artwork about?'},
+{q:'Which type of subject depicts something easily recognizable, like portraits, landscapes, or still life?', opts:['Non-representational','Representational (objective)','Abstract','Non-objective'], a:1, why:'Representational (objective) – recognizable subjects.'},
+{q:'Which type of subject does NOT depict recognizable objects but uses colors, lines, shapes, and textures to express emotion or concept?', opts:['Representational','Objective','Non-representational (non-objective)','Realistic'], a:2, why:'Non-representational (non-objective) – no recognizable objects.'},
+{q:'According to the module, the subject of art can be which of the following?', opts:['Person only','Object only','Person, object, idea, or event','Landscape only'], a:2, why:'Person, object, idea, or event.'},
+{q:'Which of the following are examples of Representational (Objective) Art?', opts:['Portraits, landscapes, historical events, still life','Colors, lines, shapes, textures','Emotions, concepts, ideas','Abstract forms only'], a:0, why:'Portraits, landscapes, historical events, still life.'},
+{q:'The content of art answers which question?', opts:['What is the artwork about?','What is the artist trying to say?','How was it made?','Who made it?'], a:1, why:'What is the artist trying to say?'},
+{q:'What are the three levels of content in art?', opts:['Subject matter, form, iconography','Line, shape, color','Personal, social, physical','Representational, non-representational, abstract'], a:0, why:'Subject matter, form, iconography/meaning.'},
+{q:'Which function of art serves as a form of self-expression or emotional release?', opts:['Social','Personal','Physical','Political'], a:1, why:'Personal function – self-expression/emotional release.'},
+{q:'Murals that promote peace, festivals that preserve culture, and protest art against corruption are examples of what function?', opts:['Personal','Social','Spiritual','Educational'], a:1, why:'Social function – bridge between people, shared values.'},
+{q:'Architecture, clothing design, furniture, and product design combining usefulness and beauty belong to which function?', opts:['Physical (practical)','Spiritual','Political','Cultural'], a:0, why:'Physical (practical) – combines usefulness & beauty.'},
+{q:'Art used in rituals, worship, and religious storytelling serves which function?', opts:['Educational','Spiritual (religious)','Political','Social'], a:1, why:'Spiritual (religious) – rituals, worship, storytelling.'},
+{q:'Art that serves as a tool for learning, informs, inspires curiosity, and communicates ideas visually is which function?', opts:['Educational','Political','Social','Personal'], a:0, why:'Educational – tool for learning, inspires curiosity.'},
+{q:'Art used to promote ideology, criticize leaders, or influence political thought is which function?', opts:['Educational','Political','Social','Cultural'], a:1, why:'Political – promote ideology, criticize leaders.'},
+{q:'Which function of art preserves and celebrates a community’s heritage, beliefs, and identity?', opts:['Cultural','Political','Educational','Personal'], a:0, why:'Cultural – preserves heritage, beliefs, identity.'},
+{q:'Which of the following best describes an artist?', opts:['Skilled craftsperson creating functional yet artistic objects','Person who creates art primarily for self-expression, emotion, or concept','Always works with traditional techniques','Focuses only on practical use'], a:1, why:'Artist – creates for self-expression, emotion, concept.'},
+{q:'Which of the following best describes an artisan?', opts:['Creates primarily for self-expression and emotion','Skilled craftsperson creating functional yet artistic objects','Focuses only on conceptual meaning beyond practical use','Always works in digital media'], a:1, why:'Artisan – skilled craftsperson, functional yet artistic.'},
+{q:'Poetry, prose, and drama are examples of which form of art?', opts:['Visual arts','Literary arts','Applied arts','Performing arts'], a:1, why:'Literary arts – poetry, prose, drama.'},
+{q:'Dance, music, and theater belong to which form of art?', opts:['Visual arts','Literary arts','Performing arts','Applied arts'], a:2, why:'Performing arts – dance, music, theater.'},
+{q:'Design, crafts, industrial arts, and fashion are all part of which art form?', opts:['Visual arts','Literary arts','Performing arts','Applied arts'], a:3, why:'Applied arts – design, crafts, industrial, fashion.'},
+{q:'Painting, sculpture, architecture, photography, and film belong to which form of art?', opts:['Visual arts','Literary arts','Performing arts','Applied arts'], a:0, why:'Visual arts – painting, sculpture, architecture, photography, film.'},
+{q:'Which of the following is a key difference between Philosophical Perspective and Assumptions of Arts?', opts:['Philosophical Perspective is belief-based; Assumptions are theory-based','Philosophical Perspective is theory-based and explains “why” & “how”; Assumptions are belief-based and state “what” & “truths”','Both are the same thing','Philosophical Perspective is only for artists; Assumptions are only for viewers'], a:1, why:'Philosophical Perspective: theory-based, explains why/how. Assumptions: belief-based, states what/truths.'},
+{q:'According to the module, what is the general statement about what art can do?', opts:['Art can only entertain','Art can entertain, teach, express, inspire, or even protest','Art can only express emotions','Art can only be decorative'], a:1, why:'Art can entertain, teach, express, inspire, or even protest.'},
+{qtype:'tf', q:'The subject of art is the main object or theme that the artist portrays.', a:true, why:'True – subject is the main object/theme.'},
+{qtype:'tf', q:'Representational art is also called non-objective art.', a:false, why:'False – representational is objective, not non-objective.'},
+{qtype:'tf', q:'Even if two artworks have the same subject, their content can be completely different.', a:true, why:'True – same subject, different content possible.'},
+{qtype:'tf', q:'Subject matter is the literal object you see in an artwork.', a:true, why:'True – subject matter is literal object.'},
+{qtype:'tf', q:'Form in content refers to how the artist arranges and uses elements of art like composition, color, and line.', a:true, why:'True – form is arrangement of elements.'},
+{qtype:'tf', q:'Iconography/meaning is the symbolic or emotional meaning behind the work.', a:true, why:'True – iconography is symbolic/emotional meaning.'},
+{qtype:'tf', q:'The personal function of art is used to inform, inspire, unite, or protest social injustices.', a:false, why:'False – that is social function, not personal.'},
+{qtype:'tf', q:'An artist creates art primarily for self-expression, emotion, or concept.', a:true, why:'True – artist creates for self-expression.'},
+{qtype:'tf', q:'An artisan’s work often aims to evoke thought, feeling, or meaning beyond practical use.', a:false, why:'False – that describes an artist, not artisan.'},
+{qtype:'tf', q:'Visual arts include painting, sculpture, architecture, photography, and film.', a:true, why:'True – visual arts include painting, sculpture, architecture, photography, film.'},
+{qtype:'tf', q:'The physical function of art combines usefulness and beauty, as in architecture and furniture design.', a:true, why:'True – physical function combines usefulness & beauty.'},
+{qtype:'tf', q:'The philosophical perspective of art is belief-based and states the “what” and “truths” we hold about art.', a:false, why:'False – philosophical perspective is theory-based, not belief-based.'},
+{qtype:'fill', q:'The ________ of art is the main object or theme that the artist portrays.', a:'subject', why:'Main object or theme.'},
+{qtype:'fill', q:'________ art depicts something that is easily recognizable, like portraits and landscapes.', a:'Representational', why:'Objective art.'},
+{qtype:'fill', q:'________ art does not depict recognizable objects and uses colors, lines, shapes, and textures.', a:'Non-representational', why:'Non-objective art.'},
+{qtype:'fill', q:'The subject of art can be a person, object, idea, or ________.', a:'event', why:'Person, object, idea, or event.'},
+{qtype:'fill', q:'The content of art refers to the message, idea, emotion, or ________ behind the artwork.', a:'meaning', why:'Message, idea, emotion, meaning.'},
+{qtype:'fill', q:'The three levels of content are subject matter, form, and ________.', a:'iconography', why:'Symbolic or emotional meaning.'},
+{qtype:'fill', q:'The ________ function of art serves as a form of self-expression or emotional release.', a:'personal', why:'Self-expression or emotional release.'},
+{qtype:'fill', q:'The ________ function of art serves as a bridge between people, communicating shared values and traditions.', a:'social', why:'Bridge between people, shared values.'},
+{qtype:'fill', q:'The ________ function of art combines usefulness and beauty, as in architecture and furniture design.', a:'physical', why:'Practical, combines usefulness & beauty.'},
+{qtype:'fill', q:'The ________ function of art connects humans with faith, belief, or spirituality.', a:'spiritual', why:'Connects with faith, belief, spirituality.'},
+{qtype:'fill', q:'The ________ function of art serves as a tool for learning and communicates ideas visually.', a:'educational', why:'Tool for learning, communicates ideas visually.'},
+{qtype:'fill', q:'The ________ function of art is used to promote ideology, criticize leaders, or influence political thought.', a:'political', why:'Promote ideology, criticize leaders.'},
+{qtype:'fill', q:'The ________ function of art preserves and celebrates a community’s heritage, beliefs, and identity.', a:'cultural', why:'Preserves heritage, beliefs, identity.'},
+{qtype:'fill', q:'An ________ is a skilled craftsperson who creates functional yet artistic objects, combining beauty and utility.', a:'artisan', why:'Skilled craftsperson, functional yet artistic.'},
+{qtype:'fill', q:'________ arts include painting, sculpture, architecture, photography, and film.', a:'Visual', why:'Visual arts include painting, sculpture, etc.'},
+{q:'Writing a poem about heartbreak', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:0, why:'Personal Function'},
+{q:'Murals that promote peace and equality', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:1, why:'Social Function'},
+{q:'Architecture and furniture design', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:2, why:'Physical (Practical) Function'},
+{q:'Art used in rituals and worship', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:3, why:'Spiritual (Religious) Function'},
+{q:'Art as a tool for learning and inspiring curiosity', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:4, why:'Educational Function'},
+{q:'Art used to promote ideology or criticize leaders', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:5, why:'Political Function'},
+{q:'Art that preserves a community’s heritage and identity', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:6, why:'Cultural Function'},
+{q:'Weavers from Mindanao, potters from Vigan', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:7, why:'Artisan'},
+{q:'Juan Luna, Fernando Amorsolo, Ryan Cayabyab', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:8, why:'Artist'},
+{q:'Design, crafts, industrial arts, fashion', opts:['Personal Function','Social Function','Physical (Practical) Function','Spiritual (Religious) Function','Educational Function','Political Function','Cultural Function','Artisan','Artist','Applied Arts'], a:9, why:'Applied Arts'},
+],
+'UNIT III': [
+{q:'What does “medium” refer to in art?', opts:['The message behind the artwork','The materials, tools, or substances used to create art','The historical context','The size of the artwork'], a:1, why:'Materials, tools, or substances used to create art.'},
+{q:'What refers to the specific methods, skills, processes, and approaches artists use to manipulate their chosen medium?', opts:['Style','Technique','Form','Composition'], a:1, why:'Technique – specific methods, skills, processes.'},
+{q:'Which painting technique involves smoothly combining colors or tones to create gradual transitions?', opts:['Layering','Impasto','Blending','Glazing'], a:2, why:'Blending – smooth transitions.'},
+{q:'Which painting technique involves applying multiple levels of colors, materials, or details on top of one another?', opts:['Blending','Layering','Wet-on-wet','Dry brush'], a:1, why:'Layering – multiple levels on top.'},
+{q:'Which painting technique involves applying paint thickly so that brush marks or textures become visible?', opts:['Blending','Glazing','Impasto','Wet-on-wet'], a:2, why:'Impasto – thick paint, visible brush marks.'},
+{q:'Which painting technique involves applying new paint onto a surface that already has wet paint, allowing colors to mix naturally?', opts:['Dry brush','Glazing','Wet-on-wet','Layering'], a:2, why:'Wet-on-wet – new paint on wet surface.'},
+{q:'Which painting technique uses a brush with very little paint to create rough textures?', opts:['Dry brush','Impasto','Glazing','Blending'], a:0, why:'Dry brush – little paint, rough textures.'},
+{q:'Which painting technique involves applying thin transparent layers of paint over another layer, keeping previous colors visible?', opts:['Glazing','Impasto','Layering','Wet-on-wet'], a:0, why:'Glazing – thin transparent layers.'},
+{q:'Which drawing technique uses variations of darkness and lightness to create the illusion of depth?', opts:['Hatching','Cross-hatching','Shading','Blending'], a:2, why:'Shading – variations of darkness/lightness.'},
+{q:'Which drawing technique uses parallel lines to create value and texture?', opts:['Shading','Hatching','Cross-hatching','Layering'], a:1, why:'Hatching – parallel lines.'},
+{q:'Which drawing technique uses intersecting lines?', opts:['Hatching','Shading','Cross-hatching','Impasto'], a:2, why:'Cross-hatching – intersecting lines.'},
+{q:'Which sculpture technique involves removing material to reveal a desired form?', opts:['Modeling','Casting','Carving','Assemblage'], a:2, why:'Carving – removing material.'},
+{q:'Which sculpture technique involves shaping soft materials by adding, pressing, or forming them?', opts:['Carving','Modeling','Casting','Assemblage'], a:1, why:'Modeling – shaping soft materials.'},
+{q:'Which sculpture technique involves pouring a liquid material into a mold and allowing it to harden?', opts:['Carving','Modeling','Casting','Assemblage'], a:2, why:'Casting – pouring liquid into mold.'},
+{q:'Which sculpture technique involves combining different objects or materials to create a sculpture?', opts:['Carving','Modeling','Casting','Assemblage'], a:3, why:'Assemblage – combining different objects.'},
+{q:'Which photography technique refers to how elements are arranged within a photograph?', opts:['Lighting','Perspective','Composition','Glazing'], a:2, why:'Composition – arrangement of elements.'},
+{q:'Which photography technique dramatically affects mood?', opts:['Composition','Lighting','Perspective','Shading'], a:1, why:'Lighting – dramatically affects mood.'},
+{q:'Which photography technique refers to the angle from which an image is captured?', opts:['Composition','Lighting','Perspective','Contrast'], a:2, why:'Perspective – angle of capture.'},
+{q:'Which element of art is a continuous mark made by a moving point?', opts:['Shape','Line','Form','Texture'], a:1, why:'Line – continuous mark made by a moving point.'},
+{q:'Which element of art refers to a two-dimensional area created by lines?', opts:['Form','Shape','Space','Color'], a:1, why:'Shape – two-dimensional area created by lines.'},
+{q:'Which of the following are examples of geometric shapes?', opts:['Leaves, clouds, human figures, flowers','Circle, square, triangle, rectangle','Silk, sandpaper, fur, glass','Straight, curved, thick, thin'], a:1, why:'Circle, square, triangle, rectangle – geometric shapes.'},
+{q:'Which of the following are examples of organic shapes?', opts:['Circle, square, triangle, rectangle','Leaves, clouds, human figures, flowers','Cube, pyramid, sphere, cylinder','Horizontal, vertical, diagonal'], a:1, why:'Leaves, clouds, human figures, flowers – organic shapes.'},
+{q:'What is the difference between shape and form?', opts:['Shape is 3D, form is 2D','Shape is 2D, form is 3D','Both are 2D','Both are 3D'], a:1, why:'Shape is 2D, form is 3D.'},
+{q:'In color theory, what does “Hue” refer to?', opts:['How bright, vivid, dull, or muted a color is','The color family','The surface quality','The arrangement of elements'], a:1, why:'Hue – color family.'},
+{q:'In color theory, what does “Intensity” refer to?', opts:['The color family','How bright, vivid, dull, or muted a color is','The lightness or darkness','The texture'], a:1, why:'Intensity – how bright, vivid, dull, or muted.'},
+{q:'Which element refers to the surface quality of an object (e.g., silk, sandpaper, fur)?', opts:['Color','Space','Texture','Form'], a:2, why:'Texture – surface quality (silk, sandpaper, fur).'},
+{q:'Which principle of design refers to the use of difference and variation within an artwork to create interest and prevent monotony?', opts:['Unity','Variety','Pattern','Balance'], a:1, why:'Variety – difference and variation to create interest.'},
+{q:'Which principle of design is described as “an artwork can become visually flat or difficult to understand because everything may appear equally important”?', opts:['Balance','Emphasis','Contrast','Movement'], a:2, why:'Contrast – without it, artwork becomes visually flat.'},
+{qtype:'tf', q:'The medium itself can communicate meaning.', a:true, why:'True – medium can communicate meaning.'},
+{qtype:'tf', q:'Technique refers to the materials, tools, or substances used by an artist.', a:false, why:'False – that is medium; technique is methods/skills.'},
+{qtype:'tf', q:'Shading uses variations of darkness and lightness to create the illusion of depth.', a:true, why:'True – shading creates illusion of depth.'},
+{qtype:'tf', q:'Carving involves adding material to create a desired form.', a:false, why:'False – carving removes material; modeling adds.'},
+{qtype:'tf', q:'Casting involves pouring a liquid material into a mold and allowing it to harden.', a:true, why:'True – casting uses a mold and liquid.'},
+{qtype:'tf', q:'Form is two-dimensional, while shape is three-dimensional.', a:false, why:'False – shape is 2D, form is 3D.'},
+{qtype:'tf', q:'Color can attract attention, create mood, establish symbolism, and help organize an artwork.', a:true, why:'True – color attracts attention, creates mood, etc.'},
+{qtype:'tf', q:'Texture refers to the surface quality of an object.', a:true, why:'True – texture is surface quality.'},
+{qtype:'tf', q:'Space refers to the area around, between, above, below, or within objects.', a:true, why:'True – space is area around, between, etc.'},
+{qtype:'tf', q:'Balance is the principle of making a particular part of an artwork more noticeable than other parts.', a:false, why:'False – that is emphasis; balance distributes visual weight.'},
+{qtype:'tf', q:'Emphasis is the principle of making a particular part of an artwork more noticeable or important than the other parts.', a:true, why:'True – emphasis makes a part more noticeable.'},
+{qtype:'tf', q:'Proportion refers to the relationship between the size, scale, and dimensions of different parts of an artwork.', a:true, why:'True – proportion is relationship of size, scale, dimensions.'},
+{qtype:'fill', q:'________ refers to the materials, tools, or substances used by an artist to create an artwork.', a:'Medium', why:'Materials, tools, substances.'},
+{qtype:'fill', q:'________ refers to the specific methods, skills, processes, and approaches artists use to manipulate their chosen medium.', a:'Technique', why:'Specific methods, skills, processes.'},
+{qtype:'fill', q:'________ is the painting technique where paint is applied thickly so that brush marks or textures become visible.', a:'Impasto', why:'Thick paint, visible brush marks.'},
+{qtype:'fill', q:'________ is the drawing technique that uses parallel lines to create value and texture.', a:'Hatching', why:'Parallel lines.'},
+{qtype:'fill', q:'________ is the drawing technique that uses intersecting lines.', a:'Cross-hatching', why:'Intersecting lines.'},
+{qtype:'fill', q:'________ involves removing material to reveal a desired form.', a:'Carving', why:'Removing material.'},
+{qtype:'fill', q:'________ involves shaping soft materials by adding, pressing, or forming them.', a:'Modeling', why:'Shaping soft materials.'},
+{qtype:'fill', q:'________ involves pouring a liquid material into a mold and allowing it to harden.', a:'Casting', why:'Pouring liquid into mold.'},
+{qtype:'fill', q:'________ involves combining different objects or materials to create a sculpture.', a:'Assemblage', why:'Combining different objects.'},
+{qtype:'fill', q:'The principle of ________ is the distribution of visual weight in an artwork so that the composition feels stable and organized.', a:'Balance', why:'Distribution of visual weight.'},
+{qtype:'fill', q:'The principle of ________ creates a sense of motion or guides the viewer’s eyes through an artwork.', a:'Movement', why:'Creates sense of motion, guides eyes.'},
+{qtype:'fill', q:'The principle of ________ is the repetition of visual elements in a predictable or recognizable arrangement.', a:'Pattern', why:'Repetition of visual elements.'},
+{qtype:'fill', q:'The principle of ________ is the sense that all parts of an artwork belong together and contribute to one overall composition or idea.', a:'Unity', why:'All parts belong together.'},
+{qtype:'fill', q:'The principle of ________ refers to the relationship between the size, scale, and dimensions of different parts of an artwork.', a:'Proportion', why:'Relationship of size, scale, dimensions.'},
+{qtype:'fill', q:'The principle of ________ is the use of difference and variation within an artwork to create interest and prevent monotony.', a:'Variety', why:'Difference and variation to create interest.'},
+{q:'Smoothly combining colors or tones to create gradual transitions', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:0, why:'Blending'},
+{q:'Applying multiple levels of colors, materials, or details on top of one another', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:1, why:'Layering'},
+{q:'Applying new paint onto a surface that already has wet paint', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:3, why:'Wet-on-Wet'},
+{q:'Using a brush with very little paint to create rough textures', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:4, why:'Dry Brush'},
+{q:'Applying thin transparent layers of paint over another layer', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:5, why:'Glazing'},
+{q:'Variations of darkness and lightness to create the illusion of depth', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:6, why:'Shading'},
+{q:'Using parallel lines to create value and texture', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:7, why:'Hatching'},
+{q:'Using intersecting lines', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:8, why:'Cross-Hatching'},
+{q:'Removing material to reveal a desired form', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:9, why:'Carving'},
+{q:'Shaping soft materials by adding, pressing, or forming them', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:10, why:'Modeling'},
+{q:'Pouring a liquid material into a mold and allowing it to harden', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:11, why:'Casting'},
+{q:'Combining different objects or materials to create sculpture', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:12, why:'Assemblage'},
+{q:'How elements are arranged within a photograph', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:13, why:'Composition'},
+{q:'Dramatically affects mood in photography', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:14, why:'Lighting'},
+{q:'The angle from which an image is captured', opts:['Blending','Layering','Impasto','Wet-on-Wet','Dry Brush','Glazing','Shading','Hatching','Cross-Hatching','Carving','Modeling','Casting','Assemblage','Composition','Lighting','Perspective'], a:15, why:'Perspective'},
+{qtype:'fill', q:'What is the principle of design that creates a sense of motion or guides the viewer’s eyes through an artwork?', a:'Movement', why:'Creates sense of motion, guides eyes.'},
+{qtype:'fill', q:'What is the principle of design that is the repetition of visual elements in a predictable or recognizable arrangement?', a:'Pattern', why:'Repetition of visual elements.'},
+{qtype:'fill', q:'What is the principle of design that is the sense that all parts of an artwork belong together and contribute to one overall composition or idea?', a:'Unity', why:'All parts belong together.'},
+{qtype:'fill', q:'What is the principle of design that is the use of difference and variation within an artwork to create interest and prevent monotony?', a:'Variety', why:'Difference and variation to create interest.'},
+{qtype:'fill', q:'What is the principle of design that refers to the relationship between the size, scale, and dimensions of different parts of an artwork?', a:'Proportion', why:'Relationship of size, scale, dimensions.'},
+{qtype:'fill', q:'What is the process of turning an idea, concept, or inspiration into an actual artwork called?', a:'Art Production', why:'Turning an idea into an actual artwork.'},
+{qtype:'fill', q:'What is the process of selecting, organizing, interpreting, preserving, and presenting artworks for an audience called?', a:'Art Curation', why:'Selecting, organizing, interpreting, preserving, presenting.'},
+{qtype:'fill', q:'Name one source of inspiration for art production mentioned in the module.', a:'Any of: personal experiences, emotions, nature, culture, history, society, politics, relationships, dreams, imagination', why:'Source of inspiration.'},
+{qtype:'fill', q:'What element of art is a continuous mark made by a moving point?', a:'Line', why:'Continuous mark made by a moving point.'},
+{qtype:'fill', q:'What element of art refers to the surface quality of an object?', a:'Texture', why:'Surface quality of an object.'},
+{qtype:'fill', q:'What element of art refers to the area around, between, above, below, or within objects?', a:'Space', why:'Area around, between, above, below, or within objects.'},
+{qtype:'fill', q:'In color theory, what term refers to the color family?', a:'Hue', why:'Color family.'},
+{qtype:'fill', q:'In color theory, what term refers to how bright, vivid, dull, or muted a color is?', a:'Intensity', why:'How bright, vivid, dull, or muted.'},
+{qtype:'fill', q:'What is the painting technique that involves applying thin transparent layers of paint over another layer?', a:'Glazing', why:'Thin transparent layers of paint.'},
+{qtype:'fill', q:'What is the sculpture technique that involves combining different objects or materials?', a:'Assemblage', why:'Combining different objects or materials.'},
+],
+};
+
 let currentPretestKey = null;
 let SEL = localStorage.getItem('hum1_unit') || 'UNIT I';
 let XP = parseInt(localStorage.getItem('hum1_xp')||'0');
@@ -626,7 +848,7 @@ let DONE = JSON.parse(localStorage.getItem('hum1_done')||'[]');
 let mode='lesson', steps=[], idx=0, xpRun=0, correctFirst=0, totalQ=0, locked=false, chosen=null, tfChosen=null, lastQuiz='unit', wrongList=[];
 function $(id){return document.getElementById(id)}
 function save(){localStorage.setItem('hum1_xp',XP);localStorage.setItem('hum1_streak',STREAK);localStorage.setItem('hum1_done',JSON.stringify(DONE));localStorage.setItem('hum1_unit',SEL)}
-function refresh(){ $('h-xp').textContent=XP; $('h-streak').textContent=STREAK; if($('r-xp')) $('r-xp').textContent=XP; if($('r-streak')) $('r-streak').textContent=STREAK; if($('h-hearts')) $('h-hearts').textContent='5';
+function refresh(){ $('h-xp').textContent=XP; $('h-streak').textContent=STREAK; if($('r-xp')) $('r-xp').textContent=XP; if($('r-streak')) $('r-streak').textContent=STREAK;
 ['UNIT I','UNIT II','UNIT III'].forEach((u,i)=>{ $('u'+(i+1)).classList.toggle('active', u===SEL) });
 $('unit-desc').textContent = UNITS[SEL].desc;
 try{
@@ -670,32 +892,32 @@ function showQuizPicker(){
 $('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('mapview').classList.add('hidden');$('pretestview').classList.add('hidden');$('longquizview').classList.add('hidden');$('quizview').classList.remove('hidden');
 let ql=$('quizlist'); ql.innerHTML='';
 Object.keys(UNITS).forEach(u=>{
-let LS=lessonsOfUnit(u); let n=0; LS.forEach(L=>n+=L.questions.length);
+let n=(typeof MOCK_QUIZZES!=='undefined'&&MOCK_QUIZZES[u])?MOCK_QUIZZES[u].length:0;
 let d=document.createElement('button'); d.className='menu-card';
-d.innerHTML='<div class="icon">?</div><div><h2>Quiz — '+u+'</h2><p>'+n+' questions • shuffled</p></div>';
+d.innerHTML='<div class="icon">?</div><div><h2>Quiz — '+u+'</h2><p>'+n+' mock test questions • shuffled</p></div>';
 d.onclick=()=>startSpecificQuiz(u); ql.appendChild(d);
 });
 window.scrollTo(0,0);
 }
 function startSpecificQuiz(unit){
 SEL=unit; save(); refresh();
-let LS=lessonsOfUnit(unit);
-steps=[]; LS.forEach(L=>L.questions.forEach(q=>steps.push({kind:'quiz',lesson:L,...q})));
+let MQ=(typeof MOCK_QUIZZES!=='undefined'&&MOCK_QUIZZES[unit])?MOCK_QUIZZES[unit]:[];let pseudo={id:'MOCK-'+unit,short:unit.replace('UNIT ','Unit '),title:'Mock Test '+unit};
+steps=[];MQ.forEach(q=>steps.push({kind:'quiz',lesson:pseudo,...q}));if(!steps.length){let LS=lessonsOfUnit(unit);LS.forEach(L=>L.questions.forEach(q=>steps.push({kind:'quiz',lesson:L,...q})));}
 prepQuiz();
-mode='quiz'; lastQuiz='unit'; totalQ=steps.length; begin('Quiz — '+unit+' ('+steps.length+' items)', unit+' • QUIZ (shuffled)');
+mode='quiz'; lastQuiz='unit'; totalQ=steps.length; begin('Quiz — '+unit+' ('+steps.length+' items)', unit+' • MOCK TEST (shuffled)');
 }
 function startLongQuiz(){
-steps=[]; DATA.forEach(L=>L.questions.forEach(q=>steps.push({kind:'quiz',lesson:L,...q})));
+steps=[];if(typeof MOCK_QUIZZES!=='undefined'){Object.keys(MOCK_QUIZZES).forEach(u=>{let pseudo={id:'MOCK-'+u,short:u.replace('UNIT ','Unit '),title:'Mock Test '+u};MOCK_QUIZZES[u].forEach(q=>steps.push({kind:'quiz',lesson:pseudo,...q}));});}if(!steps.length){DATA.forEach(L=>L.questions.forEach(q=>steps.push({kind:'quiz',lesson:L,...q})));}
 prepQuiz();
-mode='quiz'; lastQuiz='long'; totalQ=steps.length; begin('Long Quiz — all units', 'ALL UNITS • FULL QUIZ (shuffled)');
+mode='quiz'; lastQuiz='long'; totalQ=steps.length; begin('Long Quiz — all units', 'ALL UNITS • MOCK TEST (shuffled)');
 }
 function showLongQuizPicker(){
 $('home').classList.add('hidden');$('runner').classList.add('hidden');$('done').classList.add('hidden');$('bbar').classList.add('hidden');$('mapview').classList.add('hidden');$('pretestview').classList.add('hidden');$('quizview').classList.add('hidden');$('longquizview').classList.remove('hidden');
 let ll=$('longquizlist'); ll.innerHTML='';
-let nQ=0; DATA.forEach(L=>nQ+=L.questions.length);
+let nQ=0;if(typeof MOCK_QUIZZES!=='undefined'){Object.keys(MOCK_QUIZZES).forEach(u=>nQ+=MOCK_QUIZZES[u].length);}else{DATA.forEach(L=>nQ+=L.questions.length);}
 let nP=0; if(typeof PRETEST_LIST!=='undefined'){ PRETEST_LIST.forEach(e=>nP+=e.items.length); }
 let d1=document.createElement('button'); d1.className='menu-card';
-d1.innerHTML='<div class="icon">?</div><div><h2>Long Quiz — All Units</h2><p>'+nQ+' lesson questions • shuffled</p></div>';
+d1.innerHTML='<div class="icon">?</div><div><h2>Long Quiz — All Mock Tests</h2><p>'+nQ+' mock test questions • shuffled</p></div>';
 d1.onclick=()=>startLongQuiz(); ll.appendChild(d1);
 let d2=document.createElement('button'); d2.className='menu-card';
 d2.innerHTML='<div class="icon">📝</div><div><h2>Long Pretest — All (A–E)</h2><p>'+nP+' pretest items • shuffled</p></div>';
@@ -802,7 +1024,7 @@ let head='<div class="badge">'+s.lesson.short+' • QUESTION '+qnum+' OF '+steps
 if(s.qtype==='tf'){ head+='<div class="opt" id="o-true" onclick="pickTF(true)">✅ TRUE</div><div class="opt" id="o-false" onclick="pickTF(false)">❌ FALSE</div>'; }
 else if(s._bank){ head+='<p>👆 Tap the words to build the answer, tap a placed word to remove it.</p><div class="bank-blank" id="blank"></div><div class="bank-pool" id="pool"></div>'; }
 else if(s.qtype==='fill'){ head+='<p>✍️ Type your answer</p><input class="fill-input" id="fill" placeholder="type answer…" oninput="onFill()">'; }
-else{ let letters=['A','B','C','D']; let disp=s._disp||s.opts.map((_,i)=>i); head+=disp.map((oi,di)=>'<div class="opt" id="o-'+di+'" onclick="pick('+di+')"><b>'+letters[di]+'.</b>&nbsp;'+s.opts[oi]+'</div>').join(''); }
+else{ let letters=['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']; let disp=s._disp||s.opts.map((_,i)=>i); head+=disp.map((oi,di)=>'<div class="opt" id="o-'+di+'" onclick="pick('+di+')"><b>'+letters[di]+'.</b>&nbsp;'+s.opts[oi]+'</div>').join(''); }
 head+='</div>'; st.innerHTML=head;
 if(s._bank){ drawBank(); }
 setTimeout(()=>{let f=$('fill'); if(f) f.focus()},100);
