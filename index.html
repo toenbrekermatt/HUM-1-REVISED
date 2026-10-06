@@ -1006,7 +1006,7 @@ if(!s){ finish(); return; }
 fb.classList.remove('show');
 let skipBtn=$('btn-skip'), nextBtn=$('btn-next');
 if(s.kind==='slide'){
-if(clip) clip.textContent=(idx+1)+' / '+steps.length;
+if(clip) clip.textContent=(idx+1)+' / '+steps.length;$('r-badge').style.display='none';$('r-title').style.display='none';
 skipBtn.style.visibility='visible'; skipBtn.disabled=(idx===0);
 skipBtn.textContent='BACK'; skipBtn.onclick=()=>goBack();
 nextBtn.disabled=false;
@@ -1016,7 +1016,7 @@ let memoji=s.lesson.emoji||'🎨';
 st.innerHTML='<div class="duo-lesson"><div class="duo-mascot '+mcls+'">'+memoji+'</div><div><div class="slide-kicker">'+s.lesson.short+' • SLIDE '+(idx+1)+' OF '+steps.length+'</div><div class="slide-title">'+s.t+'</div></div></div><div class="card duo-body"><p>'+s.b+'</p></div>';
 }else{
 let qnum=steps.slice(0,idx+1).filter(x=>x.kind==='quiz').length;
-if(clip) clip.textContent=qnum+' / '+steps.length;
+if(clip) clip.textContent=qnum+' / '+steps.length;$('r-badge').style.display='none';$('r-title').style.display='';
 skipBtn.style.visibility='visible'; skipBtn.disabled=false;
 skipBtn.textContent='SKIP'; skipBtn.onclick=()=>nextStep(true);
 nextBtn.textContent='CHECK'; nextBtn.disabled=true;
