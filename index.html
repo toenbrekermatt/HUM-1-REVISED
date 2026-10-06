@@ -1046,7 +1046,7 @@ function drawBank(){
   $('btn-next').disabled = !s._picked.length;
   paintInline();
 }
-function paintInline(){ let s=steps[idx]; if(!s||!s._bank) return; let h=document.querySelector('#stage h3'); if(!h) return; if(s._qhtml===undefined){ s._qhtml=h.innerHTML; } let i=0; let pk=s._picked||[]; h.innerHTML=s._qhtml.replace(/_{3,}/g,function(){ let pi=pk[i++]; return (pi===undefined)?'________':'<span class='inline-fill'>'+s._pool[pi]+'</span>'; }); }
+function paintInline(){ let s=steps[idx]; if(!s||!s._bank) return; let h=document.querySelector('#stage h3'); if(!h) return; if(s._qhtml===undefined){ s._qhtml=h.innerHTML; } let i=0; let pk=s._picked||[]; h.innerHTML=s._qhtml.replace(/_{3,}/g,function(){ let pi=pk[i++]; return (pi===undefined)?'________':'<span class="inline-fill">'+s._pool[pi]+'</span>'; }); }
 function tapBank(pi){ if(locked) return; let s=steps[idx]; if(s._picked.includes(pi)) return; s._picked.push(pi); drawBank(); }
 function untapBank(k){ if(locked) return; let s=steps[idx]; s._picked.splice(k,1); drawBank(); }
 function nextStep(force){
