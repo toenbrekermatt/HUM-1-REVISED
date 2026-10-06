@@ -865,7 +865,7 @@ function buildBank(s, answer){
   let poolSet = [];
   if(s.opts){ s.opts.forEach(o=>wordsOf(o).forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); })); }
   let extra = shuffleArr(BANK_EXTRA.slice());
-  for(let w of extra){ if(poolSet.length>=12) break; if(!ansW.includes(w) && !poolSet.includes(w)) poolSet.push(w); }
+  for(let w of extra){ if(poolSet.length>=12-ansW.length) break; if(!ansW.includes(w) && !poolSet.includes(w)) poolSet.push(w); }
   ansW.forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); });
   poolSet = poolSet.slice(0,12);
   s._pool = shuffleArr(poolSet.slice());
@@ -875,7 +875,7 @@ function buildBank(s, answer){
 }
 function prepQuiz(){ shuffleArr(steps); steps.forEach(s=>{
   if(s.opts){ s._disp=shuffleArr(s.opts.map((_,i)=>i)); s._a=s._disp.indexOf(s.a); }
-  if(s.qtype==='fill'){ buildBank(s, s.a); }
+  if(s.qtype==='fill'){ s._typed=true; }
   else if(s.opts && wordsOf(s.opts[s.a]).length<=2){ buildBank(s, s.opts[s.a]); }
 }); }
 function lessonsOfUnit(u){ return DATA.filter(L=>UNITS[u].lessons.includes(L.id)); }
