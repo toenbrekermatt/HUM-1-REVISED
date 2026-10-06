@@ -861,7 +861,7 @@ const BANK_EXTRA=['Universal','Symbolic','Intentional','Society','Culture','Cont
 function wordsOf(t){ return String(t).replace(/[“”"']/g,'').split(/\s+/).filter(Boolean); }
 function normT(t){ return String(t).toLowerCase().replace(/[.,!?;:"“”'()\[\]]/g,'').replace(/\s+/g,' ').trim(); }
 function buildBank(s, answer){
-  let ansW = wordsOf(answer);
+  let ansW = wordsOf(answer).filter(function(w){return /[A-Za-z0-9]/.test(w);});if(!ansW.length){ansW=wordsOf(answer);}
   let poolSet = ansW.slice();
   if(s.opts){ s.opts.forEach(o=>wordsOf(o).forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); })); }
   let extra = shuffleArr(BANK_EXTRA.slice());
@@ -873,9 +873,9 @@ function buildBank(s, answer){
   s._picked = [];
   s._bank = true;
 }
-function prepQuiz(){ shuffleArr(steps); steps.forEach(s=>{if(s.qtype==='fill'&&!s.opts){let lid=s.lesson&&s.lesson.id?s.lesson.id:null;let seen={};seen[normT(s.a)]=1;let uniq=[];let same=steps.filter(function(x){return x!==s&&x.qtype==='fill'&&!x.opts&&(!lid||!x.lesson||x.lesson.id===lid)&&!seen[normT(x.a)];});shuffleArr(same).forEach(function(x){let k=normT(x.a);if(!seen[k]){seen[k]=1;uniq.push(x.a);}});let distract=uniq.slice(0,3);let bi=0;while(distract.length<3&&bi<BANK_EXTRA.length){let w=BANK_EXTRA[bi++];if(!seen[normT(w)]){seen[normT(w)]=1;distract.push(w);}}s.opts=[s.a].concat(distract);s.a=0;delete s.qtype;s._fromFill=true;}
+function prepQuiz(){ shuffleArr(steps); steps.forEach(s=>{
   if(s.opts){ s._disp=shuffleArr(s.opts.map((_,i)=>i)); s._a=s._disp.indexOf(s.a); }
-  if(s.qtype==='fill'){ s._typed=true; }
+  if(s.qtype==='fill'){ if(wordsOf(s.a).length>6){let lid=s.lesson&&s.lesson.id?s.lesson.id:null;let seen={};seen[normT(s.a)]=1;let uniq=[];steps.filter(function(x){return x!==s&&x.qtype==='fill'&&!x.opts&&(!lid||!x.lesson||x.lesson.id===lid)&&!seen[normT(x.a)];}).forEach(function(x){let k=normT(x.a);if(!seen[k]){seen[k]=1;uniq.push(x.a);}});let distract=shuffleArr(uniq).slice(0,3);let bi=0;while(distract.length<3&&bi<BANK_EXTRA.length){let w=BANK_EXTRA[bi++];if(!seen[normT(w)]){seen[normT(w)]=1;distract.push(w);}}s.opts=[s.a].concat(distract);s.a=0;s._disp=shuffleArr(s.opts.map((_,i)=>i));s._a=s._disp.indexOf(s.a);delete s.qtype;} else { buildBank(s, s.a); } }
   else if(s.opts && wordsOf(s.opts[s.a]).length<=2){ buildBank(s, s.opts[s.a]); }
 }); }
 function lessonsOfUnit(u){ return DATA.filter(L=>UNITS[u].lessons.includes(L.id)); }
@@ -1061,7 +1061,7 @@ function checkAnswer(){
 let s=steps[idx]; locked=true;
 let correct=false, correctText='', yours='';
 if(s.qtype==='tf'){ correct=(tfChosen===s.a); correctText=s.a?'TRUE':'FALSE'; yours=(tfChosen===null||tfChosen===undefined)?'(no answer)':(tfChosen?'TRUE':'FALSE'); markTF(s.a,tfChosen); }
-else if(s._bank){ let v=normT(bankText()); correct=(v===normT(s._bankAnswer)); correctText=s._bankAnswer; yours=bankText()||'(no answer)'; }
+else if(s._bank){ let v=normT(bankText()); correct=fillAccept(bankText(),s._bankAnswer); correctText=s._bankAnswer; yours=bankText()||'(no answer)'; }
 else if(s.qtype==='fill'){ let f=$('fill'); let v=f?f.value.trim().toLowerCase():''; yours=f&&f.value.trim()?f.value.trim():'(no answer)'; correct=fillAccept(v,s.a); correctText=s.a; if(f) f.style.background=correct?'#d7ffb8':'#ffdfe0'; }
 else{ let ai=(s._a!==undefined?s._a:s.a); correct=(chosen===ai); correctText=s.opts[s.a]; let disp=s._disp||s.opts.map((_,i)=>i); yours=(chosen===null||chosen===undefined)?'(no answer)':s.opts[disp[chosen]]; markOpts(ai,chosen); }
 $('bbar').style.visibility='hidden';
