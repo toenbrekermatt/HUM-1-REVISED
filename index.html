@@ -201,6 +201,7 @@ button.big{border-radius:12px!important;font-family:'Nunito',system-ui,sans-seri
 .run-top .pill{font-size:14px!important}
 @media(max-width:520px){.run-top{gap:8px!important}#r-clip{display:none}.btn-skip{min-width:80px}}
 </style>
+<style>.inline-fill{display:inline-block;min-width:64px;text-align:center;font-weight:900;color:#1cb0f6;background:#ddf4ff;border-bottom:3px solid #1cb0f6;border-radius:8px;padding:0 10px;margin:0 2px;}</style>
 </head>
 <body>
 <div class="topnav"><button class="back" onclick="goHome()">✕</button><div class="title">HUM-1 ARTS APPRECIATION</div></div>
@@ -1043,7 +1044,9 @@ function drawBank(){
   pool.innerHTML='';
   s._pool.forEach((w,pi)=>{ let b=document.createElement('button'); b.className='wchip'+(s._picked.includes(pi)?' used':''); b.textContent=w; b.onclick=()=>tapBank(pi); pool.appendChild(b); });
   $('btn-next').disabled = !s._picked.length;
+  paintInline();
 }
+function paintInline(){ let s=steps[idx]; if(!s||!s._bank) return; let h=document.querySelector('#stage h3'); if(!h) return; if(s._qhtml===undefined){ s._qhtml=h.innerHTML; } let i=0; let pk=s._picked||[]; h.innerHTML=s._qhtml.replace(/_{3,}/g,function(){ let pi=pk[i++]; return (pi===undefined)?'________':'<span class='inline-fill'>'+s._pool[pi]+'</span>'; }); }
 function tapBank(pi){ if(locked) return; let s=steps[idx]; if(s._picked.includes(pi)) return; s._picked.push(pi); drawBank(); }
 function untapBank(k){ if(locked) return; let s=steps[idx]; s._picked.splice(k,1); drawBank(); }
 function nextStep(force){
