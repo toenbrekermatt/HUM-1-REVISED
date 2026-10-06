@@ -873,7 +873,7 @@ function buildBank(s, answer){
   s._picked = [];
   s._bank = true;
 }
-function prepQuiz(){ shuffleArr(steps); steps.forEach(s=>{if(s.qtype==='fill'&&s.lesson&&s.lesson.id&&s.lesson.id.indexOf('MOCK-')===0){let lid=s.lesson.id;let seen={};seen[normT(s.a)]=1;let uniq=[];let same=steps.filter(function(x){return x!==s&&x.qtype==='fill'&&!x.opts&&x.lesson&&x.lesson.id===lid&&!seen[normT(x.a)];});shuffleArr(same).forEach(function(x){let k=normT(x.a);if(!seen[k]){seen[k]=1;uniq.push(x.a);}});let distract=uniq.slice(0,3);let bi=0;while(distract.length<3&&bi<BANK_EXTRA.length){let w=BANK_EXTRA[bi++];if(!seen[normT(w)]){seen[normT(w)]=1;distract.push(w);}}s.opts=[s.a].concat(distract);s.a=0;delete s.qtype;s._fromFill=true;}
+function prepQuiz(){ shuffleArr(steps); steps.forEach(s=>{if(s.qtype==='fill'&&!s.opts){let lid=s.lesson&&s.lesson.id?s.lesson.id:null;let seen={};seen[normT(s.a)]=1;let uniq=[];let same=steps.filter(function(x){return x!==s&&x.qtype==='fill'&&!x.opts&&(!lid||!x.lesson||x.lesson.id===lid)&&!seen[normT(x.a)];});shuffleArr(same).forEach(function(x){let k=normT(x.a);if(!seen[k]){seen[k]=1;uniq.push(x.a);}});let distract=uniq.slice(0,3);let bi=0;while(distract.length<3&&bi<BANK_EXTRA.length){let w=BANK_EXTRA[bi++];if(!seen[normT(w)]){seen[normT(w)]=1;distract.push(w);}}s.opts=[s.a].concat(distract);s.a=0;delete s.qtype;s._fromFill=true;}
   if(s.opts){ s._disp=shuffleArr(s.opts.map((_,i)=>i)); s._a=s._disp.indexOf(s.a); }
   if(s.qtype==='fill'){ s._typed=true; }
   else if(s.opts && wordsOf(s.opts[s.a]).length<=2){ buildBank(s, s.opts[s.a]); }
