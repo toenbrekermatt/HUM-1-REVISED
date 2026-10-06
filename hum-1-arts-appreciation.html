@@ -862,12 +862,12 @@ function wordsOf(t){ return String(t).replace(/[“”"']/g,'').split(/\s+/).fil
 function normT(t){ return String(t).toLowerCase().replace(/[.,!?;:"“”'()\[\]]/g,'').replace(/\s+/g,' ').trim(); }
 function buildBank(s, answer){
   let ansW = wordsOf(answer);
-  let poolSet = [];
+  let poolSet = ansW.slice();
   if(s.opts){ s.opts.forEach(o=>wordsOf(o).forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); })); }
   let extra = shuffleArr(BANK_EXTRA.slice());
-  for(let w of extra){ if(poolSet.length>=12-ansW.length) break; if(!ansW.includes(w) && !poolSet.includes(w)) poolSet.push(w); }
-  ansW.forEach(w=>{ if(!poolSet.includes(w)) poolSet.push(w); });
-  poolSet = poolSet.slice(0,12);
+  for(let w of extra){ if(poolSet.length>=12) break; if(!poolSet.includes(w)) poolSet.push(w); }
+  let rest=shuffleArr(poolSet.slice(ansW.length));poolSet=ansW.concat(rest).slice(0,12);
+  /* pool capped above, answer-first */
   s._pool = shuffleArr(poolSet.slice());
   s._bankAnswer = answer;
   s._picked = [];
@@ -1056,12 +1056,13 @@ wrongList=wrongList.filter(w=>w.idx!==idx); wrongList.push({idx:idx, q:s.q, your
 }
 $('feedback').classList.remove('show'); idx++; if(idx>=steps.length) finish(); else render();
 }
+function fillAccept(v,a){let vn=normT(v);if(!vn)return false;let a0=String(a);let cand=[a0];let m=a0.match(/any of:(.*)/i);let src=m?m[1]:a0;src.split(/[/;,]/).forEach(function(p){cand.push(p);p.split(/ or /i).forEach(function(q){cand.push(q);});});cand.push(src.replace(/[/;,]/g,String.fromCharCode(32)));cand.push(a0.replace(/ or /gi,String.fromCharCode(32)));for(let i=0;i<cand.length;i++){if(normT(cand[i])===vn)return true;}return false;}
 function checkAnswer(){
 let s=steps[idx]; locked=true;
 let correct=false, correctText='', yours='';
 if(s.qtype==='tf'){ correct=(tfChosen===s.a); correctText=s.a?'TRUE':'FALSE'; yours=(tfChosen===null||tfChosen===undefined)?'(no answer)':(tfChosen?'TRUE':'FALSE'); markTF(s.a,tfChosen); }
 else if(s._bank){ let v=normT(bankText()); correct=(v===normT(s._bankAnswer)); correctText=s._bankAnswer; yours=bankText()||'(no answer)'; }
-else if(s.qtype==='fill'){ let f=$('fill'); let v=f?f.value.trim().toLowerCase():''; yours=f&&f.value.trim()?f.value.trim():'(no answer)'; correct=(v===String(s.a).toLowerCase()); correctText=s.a; if(f) f.style.background=correct?'#d7ffb8':'#ffdfe0'; }
+else if(s.qtype==='fill'){ let f=$('fill'); let v=f?f.value.trim().toLowerCase():''; yours=f&&f.value.trim()?f.value.trim():'(no answer)'; correct=fillAccept(v,s.a); correctText=s.a; if(f) f.style.background=correct?'#d7ffb8':'#ffdfe0'; }
 else{ let ai=(s._a!==undefined?s._a:s.a); correct=(chosen===ai); correctText=s.opts[s.a]; let disp=s._disp||s.opts.map((_,i)=>i); yours=(chosen===null||chosen===undefined)?'(no answer)':s.opts[disp[chosen]]; markOpts(ai,chosen); }
 $('bbar').style.visibility='hidden';
 let fb=$('feedback'); fb.classList.add('show');
